@@ -3,14 +3,14 @@ class CfnLint < Formula
 
   desc "Validate CloudFormation templates against the CloudFormation spec"
   homepage "https://github.com/aws-cloudformation/cfn-python-lint/"
-  url "https://github.com/aws-cloudformation/cfn-python-lint/archive/v0.22.4.tar.gz"
-  sha256 "2dad6953375b29d37809af05fcb7a69a63a551fd4017ffa6d7d6e54b7f4f43fd"
+  url "https://github.com/aws-cloudformation/cfn-python-lint/archive/v0.24.4.tar.gz"
+  sha256 "aebcccad5961851d5e432f1ac42c31b25ff649a6b9bca5544e008c8c85c6e18b"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "859ea39bde34530dec2a28f701bfc575854e63f82182ded9506cc07abd183080" => :mojave
-    sha256 "cc52b3d3d0770dabeaa1225445ec75626d5517d08fb1d8c7854a4db384a8f77d" => :high_sierra
-    sha256 "af63c831c7d1aa49f3dff90b31177ce39dc2e0ceafd6f8c78b8e7db6ef782680" => :sierra
+    sha256 "09eedf6983870b305504cb57be49a019e6caade70d82a471d24dca5c2beead27" => :catalina
+    sha256 "5354e4d8fd2a1990974f2e46d7637d1c66f547c6d87ec53797a787acbd572cb9" => :mojave
+    sha256 "5c36673c2308df1248bc97e40de541532380a2f08ee9c6a17ae14b64b9e7cd20" => :high_sierra
   end
 
   depends_on "python"
@@ -21,23 +21,23 @@ class CfnLint < Formula
   end
 
   resource "aws-sam-translator" do
-    url "https://files.pythonhosted.org/packages/dd/79/d4eabac6f1c39d2502f241f0473b4854d713d8e745c53ae557476a8027d1/aws-sam-translator-1.12.0.tar.gz"
-    sha256 "4f6c4a0b8f416c9336be8465f7e252560738308cfb2fa840d5e77257b5608945"
+    url "https://files.pythonhosted.org/packages/9e/48/2d3cf2acbac9a3761e8427e7cc02ed28640c06cf62d35341f5f98ab5c8ea/aws-sam-translator-1.14.0.tar.gz"
+    sha256 "3c615bff465fcf6a7990b9f84d002d55c75cd3e52d98e727d24959756ab0f0b1"
   end
 
   resource "boto3" do
-    url "https://files.pythonhosted.org/packages/21/c8/59b3c1e3482a2167c5bd610df006ca934145bd3148706ebc06594d9f29a9/boto3-1.9.178.tar.gz"
-    sha256 "29cc84e5a12f6476f909710373ebc294f37217baf33b50b6acd7f67aee3bb384"
+    url "https://files.pythonhosted.org/packages/d0/1d/f8c53e023ef980d1292967a19cad94f7db97b23376b021d9f8d838ca61d7/boto3-1.9.238.tar.gz"
+    sha256 "2fc1c407a5ab08cfcf54eb4171d85c523bd27019ab890de257d018af2770f71d"
   end
 
   resource "botocore" do
-    url "https://files.pythonhosted.org/packages/bc/fb/50b7d2cd4663bcf85ab8b649c738b01a544e7577663e59fa71bb998367bf/botocore-1.12.178.tar.gz"
-    sha256 "6b5a42cd6267467bf6a7d6ca9452385dd984b7b402b4a1e2a9c42e2a3d311edd"
+    url "https://files.pythonhosted.org/packages/ed/45/a22db7510cff4037395787c23b2acde75529785b93850eaecbed99cb9902/botocore-1.12.238.tar.gz"
+    sha256 "6ec3297b87d3e2c4d88b009f91061aaecdb2ceef6d9be9386394571353909adb"
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/c5/67/5d0548226bcc34468e23a0333978f0e23d28d0b3f0c71a151aef9c3f7680/certifi-2019.6.16.tar.gz"
-    sha256 "945e3ba63a0b9f577b1395204e13c3a231f9bc0223888be653286534e5873695"
+    url "https://files.pythonhosted.org/packages/62/85/7585750fd65599e88df0fed59c74f5075d4ea2fe611deceb95dd1c2fb25b/certifi-2019.9.11.tar.gz"
+    sha256 "e4f3620cfea4f83eedc95b24abd9cd56f3c4b146dd0177e83a21b4eb49e21e50"
   end
 
   resource "chardet" do
@@ -46,8 +46,8 @@ class CfnLint < Formula
   end
 
   resource "docutils" do
-    url "https://files.pythonhosted.org/packages/84/f4/5771e41fdf52aabebbadecc9381d11dea0fa34e4759b4071244fa094804c/docutils-0.14.tar.gz"
-    sha256 "51e64ef2ebfb29cae1faa133b3710143496eca21c530f3f71424d77687764274"
+    url "https://files.pythonhosted.org/packages/93/22/953e071b589b0b1fee420ab06a0d15e5aa0c7470eb9966d60393ce58ad61/docutils-0.15.2.tar.gz"
+    sha256 "a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"
   end
 
   resource "idna" do
@@ -61,8 +61,8 @@ class CfnLint < Formula
   end
 
   resource "jsonpatch" do
-    url "https://files.pythonhosted.org/packages/9a/7d/bcf203d81939420e1aaf7478a3efce1efb8ccb4d047a33cb85d7f96d775e/jsonpatch-1.23.tar.gz"
-    sha256 "49f29cab70e9068db3b1dc6b656cbe2ee4edf7dfe9bf5a0055f17a4b6804a4b9"
+    url "https://files.pythonhosted.org/packages/30/ac/9b6478a560627e4310130a9e35c31a9f4d650704bbd03946e77c73abcf6c/jsonpatch-1.24.tar.gz"
+    sha256 "cbb72f8bf35260628aea6b508a107245f757d1ec839a19c34349985e2c05645a"
   end
 
   resource "jsonpointer" do
@@ -71,13 +71,13 @@ class CfnLint < Formula
   end
 
   resource "jsonschema" do
-    url "https://files.pythonhosted.org/packages/1f/7f/a020327823b9c405ee6f85ab3053ff171e10801b19cfe55c78bb0b3810e7/jsonschema-3.0.1.tar.gz"
-    sha256 "0c0a81564f181de3212efa2d17de1910f8732fa1b71c42266d983cd74304e20d"
+    url "https://files.pythonhosted.org/packages/92/d2/8768983d6e4bb1478ea08e7bc186304f47b99c22bfd711caa8e9becb0361/jsonschema-3.0.2.tar.gz"
+    sha256 "8d4a2b7b6c2237e0199c8ea1a6d3e05bf118e289ae2b9d7ba444182a2959560d"
   end
 
   resource "pyrsistent" do
-    url "https://files.pythonhosted.org/packages/68/0b/f514e76b4e074386b60cfc6c8c2d75ca615b81e415417ccf3fac80ae0bf6/pyrsistent-0.15.2.tar.gz"
-    sha256 "16692ee739d42cf5e39cef8d27649a8c1fdb7aa99887098f1460057c5eb75c3a"
+    url "https://files.pythonhosted.org/packages/b9/66/b2638d96a2d128b168d0dba60fdc77b7800a9b4a5340cefcc5fc4eae6295/pyrsistent-0.15.4.tar.gz"
+    sha256 "34b47fa169d6006b32e99d4b3c4031f155e6e68ebcc107d6454852e8e0ee6533"
   end
 
   resource "python-dateutil" do
@@ -86,8 +86,8 @@ class CfnLint < Formula
   end
 
   resource "PyYAML" do
-    url "https://files.pythonhosted.org/packages/a3/65/837fefac7475963d1eccf4aa684c23b95aa6c1d033a2c5965ccb11e22623/PyYAML-5.1.1.tar.gz"
-    sha256 "b4bb4d3f5e232425e25dda21c070ce05168a786ac9eda43768ab7f3ac2770955"
+    url "https://files.pythonhosted.org/packages/e3/e8/b3212641ee2718d556df0f23f78de8303f068fe29cdaa7a91018849582fe/PyYAML-5.1.2.tar.gz"
+    sha256 "01adf0b6c6f61bd11af6e10ca52b7d4057dd0be0343eb9283c878cf3af56aee4"
   end
 
   resource "requests" do
@@ -106,8 +106,8 @@ class CfnLint < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/4c/13/2386233f7ee40aa8444b47f7463338f3cbdf00c316627558784e3f542f07/urllib3-1.25.3.tar.gz"
-    sha256 "dbe59173209418ae49d485b87d1681aefa36252ee85884c31346debd19463232"
+    url "https://files.pythonhosted.org/packages/ff/44/29655168da441dff66de03952880c6e2d17b252836ff1aa4421fba556424/urllib3-1.25.6.tar.gz"
+    sha256 "9a107b99a5393caf59c7aa3c1249c16e6879447533d0887f4336dde834c7be86"
   end
 
   def install

@@ -1,20 +1,19 @@
 class Openimageio < Formula
   desc "Library for reading, processing and writing images"
   homepage "https://openimageio.org/"
-  url "https://github.com/OpenImageIO/oiio/archive/Release-2.0.9.tar.gz"
-  sha256 "0cc7f8db831482ada4f7c7f97859eb4db6b0fc3626100f94a89053da1e1a8615"
+  url "https://github.com/OpenImageIO/oiio/archive/Release-2.0.11.tar.gz"
+  sha256 "3f6f872e93d5a99aa5d0ccf97a9b74ce4e6d5a33aa26b0587771cc15a3bd8d19"
   head "https://github.com/OpenImageIO/oiio.git"
 
   bottle do
-    sha256 "664be2c9f461520db7e819e7e292322a8c7f78d2ea812a93a9dd0af1773246dd" => :mojave
-    sha256 "aef61a8a303c28e741fd386c65beeb7c9cc5f5550907e6a1272e6760d1b41de7" => :high_sierra
-    sha256 "50b2a09818555b325ab9f20f6ce00cde23efffe90a79c20f6d6338d2899e4810" => :sierra
+    sha256 "2c64133dcda2a5cf8383f51e52031ce4f3e6f9afd1da5da2f53d30f0a111a364" => :catalina
+    sha256 "4957a3601db77d49e0e5e5b8d660e42de5285438cbadfbda0ab650d93e772a5a" => :mojave
+    sha256 "81e13f74918c3a07cf3206a45b6fc1ee69f85df372eb08db7301cb09448c0005" => :high_sierra
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "boost"
-  depends_on "boost-python"
   depends_on "boost-python3"
   depends_on "ffmpeg"
   depends_on "freetype"
@@ -43,12 +42,6 @@ class Openimageio < Formula
       -DUSE_QT=OFF
     ]
 
-    mkdir "build-with-python2" do
-      system "cmake", "..", "-DBoost_PYTHON_LIBRARIES=#{Formula["boost-python"].opt_lib}/libboost_python27-mt.dylib",
-                            *args
-      system "make", "install"
-    end
-
     # CMake picks up the system's python dylib, even if we have a brewed one.
     py3ver = Language::Python.major_minor_version "python3"
     py3prefix = Formula["python3"].opt_frameworks/"Python.framework/Versions/#{py3ver}"
@@ -67,9 +60,7 @@ class Openimageio < Formula
     args << "-DBoost_PYTHON_LIBRARY_DEBUG=''"
     args << "-DBoost_PYTHON_LIBRARY_RELEASE=''"
 
-    # Need to make a second build dir, otherwise cmake picks up cached files
-    # and builds against `boost-python`
-    mkdir "build-with-python3" do
+    mkdir "build" do
       system "cmake", "..", *args
       system "make", "install"
     end
@@ -80,13 +71,11 @@ class Openimageio < Formula
     assert_match "#{test_image} :    1 x    1, 3 channel, uint8 jpeg",
                  shell_output("#{bin}/oiiotool --info #{test_image} 2>&1")
 
-    ["python", "python3"].each do |python|
-      output = <<~EOS
-        from __future__ import print_function
-        import OpenImageIO
-        print(OpenImageIO.VERSION_STRING)
-      EOS
-      assert_match version.to_s, pipe_output(python, output, 0)
-    end
+    output = <<~EOS
+      from __future__ import print_function
+      import OpenImageIO
+      print(OpenImageIO.VERSION_STRING)
+    EOS
+    assert_match version.to_s, pipe_output("python3", output, 0)
   end
 end

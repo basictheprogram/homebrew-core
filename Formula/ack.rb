@@ -1,11 +1,11 @@
 class Ack < Formula
   desc "Search tool like grep, but optimized for programmers"
   homepage "https://beyondgrep.com/"
-  url "https://beyondgrep.com/ack-v3.0.2"
-  sha256 "8e49c66019af3a5bf5bce23c005231b2980e93889aa047ee54d857a75ab4a062"
+  url "https://beyondgrep.com/ack-v3.1.2"
+  sha256 "cd1b904fd3d46589b69a485da4b2e9d5f7e8df52f03e30ce12908b8f614ddbdb"
 
   head do
-    url "https://github.com/petdance/ack2.git", :branch => "dev"
+    url "https://github.com/beyondgrep/ack3.git", :branch => "dev"
 
     resource "File::Next" do
       url "https://cpan.metacpan.org/authors/id/P/PE/PETDANCE/File-Next-1.16.tar.gz"

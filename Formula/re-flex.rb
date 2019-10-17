@@ -1,17 +1,15 @@
 class ReFlex < Formula
   desc "The regex-centric, fast and flexible scanner generator for C++"
   homepage "https://www.genivia.com/doc/reflex/html"
-  url "https://github.com/Genivia/RE-flex/archive/v1.3.0.tar.gz"
-  sha256 "b3ccf23cfb2e167927258c4ab58ee3799c4cf5892b8696232f9c6e73a6c235b9"
+  url "https://github.com/Genivia/RE-flex/archive/v1.4.3.tar.gz"
+  sha256 "8cb9cc9bf40ecc145955fa52570312821bc924d6dba1021ab23af95755c04c3a"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "b0b9b8b9e8e6261e8a5838b886bba73a160ec1644d0a708ed2d656295145b9ac" => :mojave
-    sha256 "70006a21a1d1f2192be7792a251a49669bd805235641b1c20e7ef16556b227a9" => :high_sierra
-    sha256 "eccc6b41c77c6951b489df54456cfef3c52f50efab0213820e8e8e8637d3bd5e" => :sierra
+    sha256 "075657453a8dc116d425965a5ad8432b3b66b8b9cfd581eabdcaa0c595e5ebf1" => :catalina
+    sha256 "caf15bf38d93db054e1f90a9182802b7df688b3266dccd48ccd7550c7d7d50e7" => :mojave
+    sha256 "aeee136f831845272ba2e5b67aee5cbe6e93a6d4b77a9991f5bd0bda88f93e76" => :high_sierra
   end
-
-  depends_on "boost"
 
   def install
     system "./configure", "--disable-dependency-tracking",

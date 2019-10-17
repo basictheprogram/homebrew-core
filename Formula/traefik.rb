@@ -1,33 +1,26 @@
 class Traefik < Formula
   desc "Modern reverse proxy"
   homepage "https://traefik.io/"
-  url "https://github.com/containous/traefik/releases/download/v1.7.12/traefik-v1.7.12.src.tar.gz"
-  version "1.7.12"
-  sha256 "cc69fa2759c2d1ed0fcb41a83c988ff167703f399f6e83fca2dac520cd6fe35c"
+  url "https://github.com/containous/traefik/releases/download/v2.0.2/traefik-v2.0.2.src.tar.gz"
+  version "2.0.2"
+  sha256 "0bb3e1febcbbaf3161e500d52535370c0fd8401cac307d74d6f1a2d2c67878e8"
   head "https://github.com/containous/traefik.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "3a13c6e7c59ed61b16925a14abf0a1683d53ca73500d9824ee3a9e3b132753c2" => :mojave
-    sha256 "988f40a0f95c06acec675f610da3a5ebdd83edacf6e9d6fef7d83ad7cbfe44eb" => :high_sierra
-    sha256 "200fb89bdc6124bfada0f68c6efde83c4c6528c219771844552d149df8d3fd83" => :sierra
+    sha256 "8bd51c5aab6f5a39e66b378d5e08a1e1042df3799620d949ae3fc1f64857a9ab" => :catalina
+    sha256 "97b61f8d44e40137c47c49d62c7586f0638ebd3c03a6a40fb450a168a604b461" => :mojave
+    sha256 "84aa6ef7dfe757a26f8517cc063528fd98096671d01043487fc8dba57b5bd7c0" => :high_sierra
   end
 
   depends_on "go" => :build
   depends_on "go-bindata" => :build
-  depends_on "node" => :build
-  depends_on "yarn" => :build
 
   def install
     ENV["GOPATH"] = buildpath
     (buildpath/"src/github.com/containous/traefik").install buildpath.children
 
     cd "src/github.com/containous/traefik" do
-      cd "webui" do
-        system "yarn", "upgrade"
-        system "yarn", "install"
-        system "yarn", "run", "build"
-      end
       system "go", "generate"
       system "go", "build", "-o", bin/"traefik", "./cmd/traefik"
       prefix.install_metafiles
@@ -70,19 +63,33 @@ class Traefik < Formula
   test do
     require "socket"
 
-    web_server = TCPServer.new(0)
+    ui_server = TCPServer.new(0)
     http_server = TCPServer.new(0)
-    web_port = web_server.addr[1]
+    ui_port = ui_server.addr[1]
     http_port = http_server.addr[1]
-    web_server.close
+    ui_server.close
     http_server.close
 
     (testpath/"traefik.toml").write <<~EOS
-      [web]
-      address = ":#{web_port}"
-
-      [entryPoints.http]
-      address = ":#{http_port}"
+      [global]
+        checkNewVersion = false
+        sendAnonymousUsage = false
+      [serversTransport]
+        insecureSkipVerify = true
+      [entryPoints]
+        [entryPoints.http]
+          address = ":#{http_port}"
+        [entryPoints.traefik]
+          address = ":#{ui_port}"
+      [log]
+        level = "ERROR"
+        format = "common"
+      [accessLog]
+        format = "common"
+      [api]
+        insecure = true
+        dashboard = true
+        debug = true
     EOS
 
     begin
@@ -90,8 +97,11 @@ class Traefik < Formula
         exec bin/"traefik", "--configfile=#{testpath}/traefik.toml"
       end
       sleep 5
-      cmd = "curl -sIm3 -XGET http://localhost:#{web_port}/dashboard/"
-      assert_match /200 OK/m, shell_output(cmd)
+      cmd_http = "curl -sIm3 -XGET http://localhost:#{http_port}/"
+      assert_match /404 Not Found/m, shell_output(cmd_http)
+      sleep 1
+      cmd_ui = "curl -sIm3 -XGET http://localhost:#{ui_port}/dashboard/"
+      assert_match /200 OK/m, shell_output(cmd_ui)
     ensure
       Process.kill("HUP", pid)
     end

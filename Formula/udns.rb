@@ -1,11 +1,12 @@
 class Udns < Formula
   desc "DNS resolver library"
-  homepage "http://www.corpit.ru/mjt/udns.html"
-  url "http://www.corpit.ru/mjt/udns/udns-0.4.tar.gz"
+  homepage "https://www.corpit.ru/mjt/udns.html"
+  url "https://www.corpit.ru/mjt/udns/udns-0.4.tar.gz"
   sha256 "115108dc791a2f9e99e150012bcb459d9095da2dd7d80699b584ac0ac3768710"
 
   bottle do
     cellar :any
+    sha256 "18ac00a1a30fea027e398558edf149e464712c94fa68242740cc8e086e1ec036" => :catalina
     sha256 "ce9ffcdbc08861f382e251d66293c4de690e5bffe1ca3015909332b71ea306c8" => :mojave
     sha256 "806e631f04904c4e550e3397a6519ee1803cb3cbef916967f42aed331e875afa" => :high_sierra
     sha256 "8fbcc7a26f6be81abfe4766e9efc012c720938e8ea9dc9f20497cb82b101e659" => :sierra
@@ -15,7 +16,7 @@ class Udns < Formula
   end
 
   # Build target for dylib. See:
-  # http://www.corpit.ru/pipermail/udns/2011q3/000154.html
+  # https://www.corpit.ru/pipermail/udns/2011q3/000154.html
   patch :DATA
 
   def install

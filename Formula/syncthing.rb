@@ -2,21 +2,20 @@ class Syncthing < Formula
   desc "Open source continuous file synchronization application"
   homepage "https://syncthing.net/"
   url "https://github.com/syncthing/syncthing.git",
-      :tag      => "v1.2.0",
-      :revision => "20eab36a33284695ab59f492926e1f6042522a64"
+      :tag      => "v1.3.0",
+      :revision => "2c88e473cb089e377628cdd4ea086eb60ff2b195"
   head "https://github.com/syncthing/syncthing.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "0e0a9cb5c231841ac4dc8cda2a6cc694b07d47d48d25d259c6f7140fd3cd537a" => :mojave
-    sha256 "330ae5a524afb40884df9296e18006a26f092e819e9df8ba2237a8d65b393946" => :high_sierra
-    sha256 "4486d60d0ef01961bf4522f61da3b2e3815de41c51638d437edbdb721b5a0a66" => :sierra
+    sha256 "0c9bd88c534ec1e454fa433214b2a0a817a7a12390bbcb044a2cb171a1e8ce32" => :catalina
+    sha256 "81c4bbb7b6c7855a5eee5e41bb4489de4d1d301f968b1c680cb86b95c9f3fb08" => :mojave
+    sha256 "a92ac13dae538d0932c1c4f2af0185ef571f9730df74b522bc569f547211e537" => :high_sierra
   end
 
   depends_on "go" => :build
 
   def install
-    ENV["GO111MODULE"] = "on"
     ENV["GOPATH"] = buildpath
 
     src = buildpath/"src/github.com/syncthing/syncthing"

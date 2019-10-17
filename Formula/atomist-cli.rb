@@ -3,13 +3,14 @@ require "language/node"
 class AtomistCli < Formula
   desc "The Atomist CLI"
   homepage "https://github.com/atomist/cli#readme"
-  url "https://registry.npmjs.org/@atomist/cli/-/@atomist/cli-1.6.1.tgz"
-  sha256 "b39f35a9fb3df8e994840f381848f4cc3d209c8d10da315d314e3aa2ae03e643"
+  url "https://registry.npmjs.org/@atomist/cli/-/@atomist/cli-1.8.0.tgz"
+  sha256 "64bcc7484fa2f1b7172984c278ae928450149fb02b750f79454b1a6683d17f62"
 
   bottle do
-    sha256 "c574d452f970fc3df0bca1a2685cb229f748e518392ba43f40cd028d98cbe267" => :mojave
-    sha256 "3973e2676c80140591173fa11d6851cb55fe6cadf5ee20edfccf5a19e1b7ae09" => :high_sierra
-    sha256 "a79beee7222ab189792d443180cf5f3c5b615c13258815c36fd6809ad6fd568f" => :sierra
+    sha256 "9682c4b3bcc11581ade4335bf5c4d4b4d2c1fbd141f8677aee8b399d5573ab0a" => :catalina
+    sha256 "a1f611e6f70a5dbdf886c6cf0a2aec9d6024a12e2e768e1f0230087babe7b3d6" => :mojave
+    sha256 "f109033a8fa80bcf777e053dfae07b84fd134c40d1ed356dbedddfad1e7b85f8" => :high_sierra
+    sha256 "314c7129a7b8f2e37ab46324dba4423c8c7712b99f1bd8f0dd5eb5904d9d3e3e" => :sierra
   end
 
   depends_on "node"

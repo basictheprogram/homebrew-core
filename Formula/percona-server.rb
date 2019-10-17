@@ -3,11 +3,13 @@ class PerconaServer < Formula
   homepage "https://www.percona.com"
   url "https://www.percona.com/downloads/Percona-Server-8.0/Percona-Server-8.0.13-4/source/tarball/percona-server-8.0.13-4.tar.gz"
   sha256 "0a42a0e51e3c27fa1fb2eb3e8d057a33e3ef77691f651b92b5ba6c9fe2890b9b"
+  revision 1
 
   bottle do
-    sha256 "f4caccf7602504cf3c7049f34ef0863c84d42e328c18f240d3ca803f13f231e7" => :mojave
-    sha256 "11d0784cccc954f1ba7932efb27e2d11559451762528090afff7ab6e554ab53b" => :high_sierra
-    sha256 "96dbc394bc381333e1ffe4e39e55260033486258ee3248bab29a4c3c52ef2492" => :sierra
+    sha256 "4577cd017f8718e66ef11d5b6e1711d344292c0eb48b4431fc19c046fb40933c" => :catalina
+    sha256 "b9c1caebe201916cc335ea1c6bf7febd7ef6c246919f0c63075bba0d821c5637" => :mojave
+    sha256 "b2eee30e6a099b054261ca3d908fcf1e6365eb033de1ffe899d1d8886adb1265" => :high_sierra
+    sha256 "18ac0d1f2f3ab54720e30d0687e44dfdf135a1b464c854390e1e6aa9e32d90ef" => :sierra
   end
 
   pour_bottle? do
@@ -21,9 +23,9 @@ class PerconaServer < Formula
   # Needs at least Clang 3.3, which shipped alongside Lion.
   # Note: MySQL themselves don't support anything below Sierra.
   depends_on :macos => :yosemite
-  depends_on "openssl"
+  depends_on "openssl@1.1"
 
-  conflicts_with "mariadb", "mysql", "mysql-cluster",
+  conflicts_with "mariadb", "mysql",
     :because => "percona, mariadb, and mysql install the same binaries."
   conflicts_with "mysql-connector-c",
     :because => "both install MySQL client libraries"
@@ -169,23 +171,21 @@ class PerconaServer < Formula
   end
 
   test do
-    begin
-      # Expects datadir to be a completely clean dir, which testpath isn't.
-      dir = Dir.mktmpdir
-      system bin/"mysqld", "--initialize-insecure", "--user=#{ENV["USER"]}",
-      "--basedir=#{prefix}", "--datadir=#{dir}", "--tmpdir=#{dir}"
+    # Expects datadir to be a completely clean dir, which testpath isn't.
+    dir = Dir.mktmpdir
+    system bin/"mysqld", "--initialize-insecure", "--user=#{ENV["USER"]}",
+    "--basedir=#{prefix}", "--datadir=#{dir}", "--tmpdir=#{dir}"
 
-      pid = fork do
-        exec bin/"mysqld", "--bind-address=127.0.0.1", "--datadir=#{dir}"
-      end
-      sleep 2
-
-      output = shell_output("curl 127.0.0.1:3306")
-      output.force_encoding("ASCII-8BIT") if output.respond_to?(:force_encoding)
-      assert_match version.to_s, output
-    ensure
-      Process.kill(9, pid)
-      Process.wait(pid)
+    pid = fork do
+      exec bin/"mysqld", "--bind-address=127.0.0.1", "--datadir=#{dir}"
     end
+    sleep 2
+
+    output = shell_output("curl 127.0.0.1:3306")
+    output.force_encoding("ASCII-8BIT") if output.respond_to?(:force_encoding)
+    assert_match version.to_s, output
+  ensure
+    Process.kill(9, pid)
+    Process.wait(pid)
   end
 end

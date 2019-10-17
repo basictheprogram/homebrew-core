@@ -1,13 +1,14 @@
 class KimApi < Formula
   desc "The Knowledgebase of Interatomic Models (KIM) API"
   homepage "https://openkim.org"
-  url "https://s3.openkim.org/kim-api/kim-api-2.1.1.txz"
-  sha256 "25c4e83c6caa83a1c4ad480b430f1926fb44813b64f548fdaedc45e310b5f6b9"
+  url "https://s3.openkim.org/kim-api/kim-api-2.1.3.txz"
+  sha256 "88a5416006c65a2940d82fad49de0885aead05bfa8b59f87d287db5516b9c467"
 
   bottle do
-    sha256 "655e139ffab7c583324cd6a2a1904793567577c1cfbf05a2562c32ec5c2306b8" => :mojave
-    sha256 "e2fba1844e3737c0f0dfca0da5f1c86cdf3bb8aeaa07d50bb30b8d97e618b5cf" => :high_sierra
-    sha256 "65b376444cf8ec498a2074e4e186e124cd1ea8fe210437fea307def5aa48c1b2" => :sierra
+    sha256 "ae59f45bf8d539f1b633120cdb942c2a0a0f1880eee4ee91981f268792e1b1c4" => :catalina
+    sha256 "f652b6fac2383753b53c16f22b4cd64ca96adaf5b61906e8a51d893fb453588a" => :mojave
+    sha256 "05e8711131862fa14cc38277d33694be33d488bbcb5efc9e59a54c67ca1df2ea" => :high_sierra
+    sha256 "31502a90222cdeffb15c7b1ad820fcae8780c6db807634e23917bd182691c0ee" => :sierra
   end
 
   depends_on "cmake" => :build
@@ -23,11 +24,12 @@ class KimApi < Formula
     args << "-DKIM_API_SYSTEM_MODEL_DRIVERS_DIR=:#{HOMEBREW_PREFIX}/lib/openkim-models/model-drivers"
     args << "-DKIM_API_SYSTEM_PORTABLE_MODELS_DIR=:#{HOMEBREW_PREFIX}/lib/openkim-models/portable-models"
     args << "-DKIM_API_SYSTEM_SIMULATOR_MODELS_DIR=:#{HOMEBREW_PREFIX}/lib/openkim-models/simulator-models"
+    # adjust zsh completion install
+    args << "-DZSH_COMPLETION_COMPLETIONSDIR=#{zsh_completion}"
     system "cmake", ".", *args
     system "make"
     system "make", "docs"
     system "make", "install"
-    zsh_completion.install "#{prefix}/etc/zsh_completion.d/kim-api-collections-management.zsh" => "_kim-api-collections-management"
   end
 
   test do

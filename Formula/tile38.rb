@@ -1,15 +1,15 @@
 class Tile38 < Formula
   desc "In-memory geolocation data store, spatial index, and realtime geofence"
   homepage "https://tile38.com/"
-  url "https://github.com/tidwall/tile38/archive/1.17.2.tar.gz"
-  sha256 "b8fab1adbbe3be98798ee81d379bc1add528512f5233c32760c29f0874ba255c"
+  url "https://github.com/tidwall/tile38/archive/1.18.0.tar.gz"
+  sha256 "75b085b1b45ae288b4b42687925cad1dda1276a7c6d08807d12b8f78374be6a5"
   head "https://github.com/tidwall/tile38.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "ab557360308a63d2b49b1b8df23a7f3708ea735831fde988ec41b6b22a5c0131" => :mojave
-    sha256 "17c82d566892d26210b7d940cce0832465b3c5162c6cbf356a65c7867080d9c2" => :high_sierra
-    sha256 "e0022ade850b378f430ef718cdc682bed3441d2641d19f46d193597478241f2d" => :sierra
+    sha256 "324f65bcc9118b37154d83eab2cf351e776371624cd1004de9b49a2c2c367e9e" => :catalina
+    sha256 "f5d76e7f7a0874464151ac6792a0d404a2b8396bcb7a36d6f8407b8a34e78a9b" => :mojave
+    sha256 "1abd14bd1217f0a522699d29af63c69cd191a75f34bdb8c91dcb1a8a2c46d8c3" => :high_sierra
   end
 
   depends_on "go" => :build
@@ -69,16 +69,14 @@ class Tile38 < Formula
   end
 
   test do
-    begin
-      pid = fork do
-        exec "#{bin}/tile38-server", "-q"
-      end
-      sleep 2
-      json_output = shell_output("#{bin}/tile38-cli server")
-      tile38_server = JSON.parse(json_output)
-      assert_equal tile38_server["ok"], true
-    ensure
-      Process.kill("HUP", pid)
+    pid = fork do
+      exec "#{bin}/tile38-server", "-q"
     end
+    sleep 2
+    json_output = shell_output("#{bin}/tile38-cli server")
+    tile38_server = JSON.parse(json_output)
+    assert_equal tile38_server["ok"], true
+  ensure
+    Process.kill("HUP", pid)
   end
 end

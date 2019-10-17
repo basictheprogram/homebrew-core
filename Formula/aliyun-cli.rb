@@ -1,19 +1,20 @@
 class AliyunCli < Formula
   desc "Universal Command-Line Interface for Alibaba Cloud"
   homepage "https://github.com/aliyun/aliyun-cli"
-  url "https://github.com/aliyun/aliyun-cli/archive/v3.0.22.tar.gz"
-  sha256 "878288818de5cd517c5c12c34bb43716d49057ed9bd9c35f0410d9b12a687cd3"
+  url "https://github.com/aliyun/aliyun-cli/archive/v3.0.29.tar.gz"
+  sha256 "11c6b62b3f13a5b9770186c155ff29fb7af30efd82547278c08eaa138e05631f"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "a13aee3ce53b22fb15d02a9e34fb797d233324066eca0b02f4b835247a8d6a8f" => :mojave
-    sha256 "58819878b6834afb7c074d3c71882dbf6dbe508ed63bc61a24035cf754f29d6d" => :high_sierra
-    sha256 "18df9905c1f0f02d6668542d3fcc65994775ed0b9f46f9b037b8d6612b74b06e" => :sierra
+    sha256 "14a843db82b5c7e9ad0d29a65d4c30284b8c5d6cd78e33e3a349881adc4d7d4a" => :catalina
+    sha256 "511c16b3fec01eccb5dc389131b324a03611e6f24cb3e80ab3db8ceb7a18e8fd" => :mojave
+    sha256 "178df7640f2902eb910e9aa10b69d211fec68368f824d6705f88042b33c87476" => :high_sierra
   end
 
-  depends_on "go"
+  depends_on "go" => :build
 
   def install
+    ENV["GO111MODULE"] = "off"
     ENV["GOPATH"] = buildpath
     ENV["PATH"] = "#{ENV["PATH"]}:#{buildpath}/bin"
     (buildpath/"src/github.com/aliyun/aliyun-cli").install buildpath.children

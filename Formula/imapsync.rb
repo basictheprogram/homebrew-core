@@ -114,8 +114,6 @@ class Imapsync < Formula
   end
 
   test do
-    output = shell_output("#{bin}/imapsync --dry")
-    assert_match version.to_s, output
-    end
+    assert_match version.to_s, pipe_output("#{bin}/imapsync --dry")
   end
 end

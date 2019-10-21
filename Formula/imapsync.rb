@@ -114,12 +114,8 @@ class Imapsync < Formula
   end
 
   test do
-    output = shell_output("#{bin}/imapsync --dry", 0)
+    output = shell_output("#{bin}/imapsync --dry")
     assert_match version.to_s, output
-    resources.each do |r|
-      next if ["Module::Build::Tiny", "Readonly", "Sys::MemInfo"].include? r.name
-
-      assert_match /#{r.name}\s+#{r.version}/, output
     end
   end
 end

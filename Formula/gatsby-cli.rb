@@ -3,14 +3,14 @@ require "language/node"
 class GatsbyCli < Formula
   desc "Gatsby command-line interface"
   homepage "https://www.gatsbyjs.org/docs/gatsby-cli/"
-  url "https://registry.npmjs.org/gatsby-cli/-/gatsby-cli-2.7.58.tgz"
-  sha256 "90f6aa7b4f7a6b1633bc22302b26be2c08672ab0cfdf6e43f7ec07a69bb9375e"
+  url "https://registry.npmjs.org/gatsby-cli/-/gatsby-cli-2.8.13.tgz"
+  sha256 "cc6238c39a33c67281b96f2bbd0ae2dfd81b7b18ccd1db77f6559a8178f3bfcb"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "e7db058f92a8bcc6457cf42b36ba66f61769a75b2dc7ef6955aafae8b76656d2" => :catalina
-    sha256 "13a8fd9ef5deffb279417a91ede44b0e8cf446149a2f16157d980f300ae7eee9" => :mojave
-    sha256 "1be90f50d8adedce5e1f6f78c2c2ad1c245b1c9ed086b42432283ab595283685" => :high_sierra
+    sha256 "8d98fca2260322ee200b2c0e171f3f46d4077641fe348e22fb6629e0e65e5e3f" => :catalina
+    sha256 "125f3e96982a35e191ae3c5773e846a571d1a977387df3b185c95127d53940d5" => :mojave
+    sha256 "45ee046b4db8534b61aa858dc813fb5bd006c6489eadd4118b620beac0a1e3fe" => :high_sierra
   end
 
   depends_on "node"

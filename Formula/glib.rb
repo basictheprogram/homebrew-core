@@ -1,14 +1,13 @@
 class Glib < Formula
   desc "Core application library for C"
   homepage "https://developer.gnome.org/glib/"
-  url "https://download.gnome.org/sources/glib/2.62/glib-2.62.1.tar.xz"
-  sha256 "3dd9024e1d0872a6da7ac509937ccf997161b11d7d35be337c7e829cbae0f9df"
+  url "https://download.gnome.org/sources/glib/2.62/glib-2.62.3.tar.xz"
+  sha256 "4400adc9f0d3ffcfe8e84225210370ce3f9853afb81812ddadb685325aa655c4"
 
   bottle do
-    rebuild 1
-    sha256 "c86dcf506163d08353b1d21429b2a0656b04186269a4bd94c3cfd80f97759982" => :catalina
-    sha256 "972801c273b00946056d29da84b84590d78a3cb357c2e02f5ceebd96497f96ad" => :mojave
-    sha256 "d6007a688cf22e175bec5d7450903c1361815af74db2c5676f9dc097ff33cae8" => :high_sierra
+    sha256 "e47b36ad0d3f8380b995573d5f545526bd6977a3196a282d91547d92d56c52f0" => :catalina
+    sha256 "4e0516869bccfbdd8d34e0a6e93521546492c556aa97b1215c9197c7ff94639f" => :mojave
+    sha256 "f361c309a647feaa81a42586cb5e9c4460ee5c77c30ad53a9973ef525ff5b06d" => :high_sierra
   end
 
   depends_on "meson" => :build

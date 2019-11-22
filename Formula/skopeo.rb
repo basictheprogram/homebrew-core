@@ -1,15 +1,16 @@
 class Skopeo < Formula
   desc "Work with remote images registries"
   homepage "https://github.com/containers/skopeo"
-  url "https://github.com/containers/skopeo/archive/v0.1.39.tar.gz"
-  sha256 "e9d70f7f7b891675a816f06a22df0490285ad20eefbd91f5da69ca12f56c29f2"
+  url "https://github.com/containers/skopeo/archive/v0.1.40.tar.gz"
+  sha256 "ee1e33245938fcb622f5864fac860e2d8bfa2fa907af4b5ffc3704ed0db46bbf"
+  revision 1
 
   bottle do
     cellar :any
-    sha256 "894487ea7a4ff00ceaae25c0aadea4405954d4b3ea9dbcd8bbe66a8521dd33b1" => :catalina
-    sha256 "840eab0e0f58502e5162629c880cc293952fe8feb9fdac09309430153dff5b13" => :mojave
-    sha256 "3c11f82391e9aa4ef6e6becb8005a002323dde8668efb5bc7f3e52892de7838e" => :high_sierra
-    sha256 "b776102170a389e39002c0dceac6b38e802b45bc513add1cacbacd9182742378" => :sierra
+    rebuild 1
+    sha256 "d382e6ed0f92e335d4b0c82bc535760dd7c32268f0b60dcb8ce7a09dbe4e1b5f" => :catalina
+    sha256 "2c766d15ff4b798021ddb5c2eff823cefbbb20afb92da2e86e8e747dc891abbd" => :mojave
+    sha256 "ae5437d6ba74269a0b82a85b365bbbdd0cf187107a44bf7119753d33e644947f" => :high_sierra
   end
 
   depends_on "go" => :build
@@ -33,10 +34,10 @@ class Skopeo < Formula
 
       ldflags = [
         "-X main.gitCommit=",
-        "-X github.com/containers/skopeo/vendor/github.com/containers/image/docker.systemRegistriesDirPath=#{etc/"containers/registries.d"}",
-        "-X github.com/containers/skopeo/vendor/github.com/containers/image/internal/tmpdir.unixTempDirForBigFiles=#{ENV["TEMPDIR"]}",
-        "-X github.com/containers/skopeo/vendor/github.com/containers/image/signature.systemDefaultPolicyPath=#{etc/"containers/policy.json"}",
-        "-X github.com/containers/skopeo/vendor/github.com/containers/image/sysregistries.systemRegistriesConfPath=#{etc/"containers/registries.conf"}",
+        "-X github.com/containers/image/docker.systemRegistriesDirPath=#{etc/"containers/registries.d"}",
+        "-X github.com/containers/image/internal/tmpdir.unixTempDirForBigFiles=/var/tmp",
+        "-X github.com/containers/image/signature.systemDefaultPolicyPath=#{etc/"containers/policy.json"}",
+        "-X github.com/containers/image/pkg/sysregistriesv2.systemRegistriesConfPath=#{etc/"containers/registries.conf"}",
       ].join(" ")
 
       system "go", "build", "-v", "-x", "-tags", buildtags, "-ldflags", ldflags, "-o", bin/"skopeo", "./cmd/skopeo"

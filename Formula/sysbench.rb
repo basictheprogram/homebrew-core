@@ -1,15 +1,15 @@
 class Sysbench < Formula
   desc "System performance benchmark tool"
   homepage "https://github.com/akopytov/sysbench"
-  url "https://github.com/akopytov/sysbench/archive/1.0.17.tar.gz"
-  sha256 "9bcad62eaf473510f5184f33cc41f1e07c2640c8810ae9eebe25ba27ba04df5d"
+  url "https://github.com/akopytov/sysbench/archive/1.0.18.tar.gz"
+  sha256 "c679b285e633c819d637bdafaeacc1bec13f37da5b3357c7e17d97a71bf28cb1"
   revision 1
 
   bottle do
     cellar :any
-    sha256 "197768ce717684b1a79b69a76f3dc8f9e1e47543ba76471699871b2af0326c69" => :mojave
-    sha256 "0f52b19854f9bc1a03835603e4c61b10a2aca9cfdaefb8f0cbafa7b2965fb90c" => :high_sierra
-    sha256 "f49ee681ab5deb62bf7ee19424333dda2374c0a2583f7e9d3b61bf6532cde228" => :sierra
+    sha256 "a720824e2b028688b66f6f364d6e45754e3544001c5ab5427d9c0fc0c5e7153f" => :catalina
+    sha256 "8343774a73daa156e839c23c521f5ddce1c4d12c7106028c6b78e3b10193e112" => :mojave
+    sha256 "6a24f2724fd649fc96a0f6829620a46b71d8edbff172fc17d163cbaaf728a3ad" => :high_sierra
   end
 
   depends_on "autoconf" => :build
@@ -25,7 +25,8 @@ class Sysbench < Formula
     # Fix for luajit build breakage.
     # Per https://luajit.org/install.html: If MACOSX_DEPLOYMENT_TARGET
     # is not set then it's forced to 10.4, which breaks compile on Mojave.
-    ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
+    # https://github.com/LuaJIT/LuaJIT/issues/518: set to 10.14 to build on Catalina.
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = (DevelopmentTools.clang_build_version >= 1100) ? "10.14" : MacOS.version
 
     system "./configure", "--prefix=#{prefix}", "--with-mysql"
     system "make", "install"

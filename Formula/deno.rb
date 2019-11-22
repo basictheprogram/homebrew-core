@@ -1,15 +1,15 @@
 class Deno < Formula
   desc "Command-line JavaScript / TypeScript engine"
   homepage "https://deno.land/"
-  url "https://github.com/denoland/deno.git",
-    :tag      => "v0.20.0",
-    :revision => "a4b27db21a10f9913460c054c98fce59f3dd157d"
+  url "https://github.com/denoland/deno/releases/download/v0.24.0/deno_src.tar.gz"
+  version "0.24.0"
+  sha256 "320eb463d49b1d896b44727da0af630cd1ce01b6d4fe3f7e93fdec8d9e42c581"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "fe1976eaad2a0190e5fad07a5bd11f2a80591b250a5a5bb5ca359f37ab50b9cf" => :catalina
-    sha256 "7761f40d5936d00f95e20cdfa3dc998883db1e16cd17223d2dcd3e3c21ac52cb" => :mojave
-    sha256 "25686f14ed244f5e95c02193e51bbc1c9a3506dcbcedcfb42ed82d8eb3a2d256" => :high_sierra
+    sha256 "6144d5639ae92686e9976d8a74ed5bf808fa2389c3c751895fb12c4c3f7280d3" => :catalina
+    sha256 "242a25861aa710c42f496c971b3e6bcec3959ee3bd62d85532959bcf95db269b" => :mojave
+    sha256 "251dd4df7dfb0a9653730e9c38f6b1975a3cdfd827a63a42f27a0a032e8d9cee" => :high_sierra
   end
 
   depends_on "llvm" => :build if DevelopmentTools.clang_build_version < 1100
@@ -20,7 +20,7 @@ class Deno < Formula
 
   resource "gn" do
     url "https://gn.googlesource.com/gn.git",
-      :revision => "972ed755f8e6d31cae9ba15fcd08136ae1a7886f"
+      :revision => "152c5144ceed9592c20f0c8fd55769646077569b"
   end
 
   def install
@@ -49,7 +49,7 @@ class Deno < Formula
     ENV["DENO_BUILD_ARGS"] = args.join(" ")
 
     cd "cli" do
-      system "cargo", "install", "-vv", "--root", prefix, "--path", "."
+      system "cargo", "install", "-vv", "--locked", "--root", prefix, "--path", "."
     end
 
     # Install bash and zsh completion

@@ -1,8 +1,8 @@
 class Gradle < Formula
   desc "Open-source build automation tool based on the Groovy and Kotlin DSL"
   homepage "https://www.gradle.org/"
-  url "https://services.gradle.org/distributions/gradle-5.6.2-all.zip"
-  sha256 "027fdd265d277bae65a0d349b6b8da02135b0b8e14ba891e26281fa877fe37a2"
+  url "https://services.gradle.org/distributions/gradle-6.0.1-all.zip"
+  sha256 "6f6cfdbb12a577c3845522a1c7fbfe1295ea05d87edabedd4e23fd2bf02b88b1"
 
   bottle :unneeded
 
@@ -10,7 +10,7 @@ class Gradle < Formula
 
   def install
     rm_f Dir["bin/*.bat"]
-    libexec.install %w[bin docs lib media samples src]
+    libexec.install %w[bin docs lib samples src]
     (bin/"gradle").write_env_script libexec/"bin/gradle", Language::Java.overridable_java_home_env
   end
 

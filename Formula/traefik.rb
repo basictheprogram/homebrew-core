@@ -1,16 +1,16 @@
 class Traefik < Formula
   desc "Modern reverse proxy"
   homepage "https://traefik.io/"
-  url "https://github.com/containous/traefik/releases/download/v2.0.2/traefik-v2.0.2.src.tar.gz"
-  version "2.0.2"
-  sha256 "0bb3e1febcbbaf3161e500d52535370c0fd8401cac307d74d6f1a2d2c67878e8"
+  url "https://github.com/containous/traefik/releases/download/v2.0.5/traefik-v2.0.5.src.tar.gz"
+  version "2.0.5"
+  sha256 "070a22f9c4e48e852499fc773b0b6a96a395a98b2d130bc6e1fbeb2949f79acc"
   head "https://github.com/containous/traefik.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "8bd51c5aab6f5a39e66b378d5e08a1e1042df3799620d949ae3fc1f64857a9ab" => :catalina
-    sha256 "97b61f8d44e40137c47c49d62c7586f0638ebd3c03a6a40fb450a168a604b461" => :mojave
-    sha256 "84aa6ef7dfe757a26f8517cc063528fd98096671d01043487fc8dba57b5bd7c0" => :high_sierra
+    sha256 "bb5f734088ccc1f79c4e698b8ec4671a1882eb628800feefa00aa8ed30b0592b" => :catalina
+    sha256 "242e2f82f04851382ab33a5d58ed2a9e9fc458955cf361570513b3b410748bf7" => :mojave
+    sha256 "60d2307e5eaa7c12b485040537a71c8ba45585a1bfca9d56369d681616919695" => :high_sierra
   end
 
   depends_on "go" => :build

@@ -6,6 +6,7 @@ class Mesos < Formula
   sha256 "583f2ad0de36c3e3ce08609a6df1a3ef1145e84f453b3d56fd8332767c3a84e7"
 
   bottle do
+    sha256 "b5d4c1be465ac092856a0bd587eedffc1f2fa4627410a4f7fb3ec2eedec36bef" => :catalina
     sha256 "f3ad80347eda8b915ad3d10da9a5ed6c7d27c0cc489d05a9a87741c1e8b03ad3" => :mojave
     sha256 "7159fdf18c7d074c0c78b0f840317c77414da66e7b559180f4e3c88ddedf90d3" => :high_sierra
     sha256 "545a5649305fb8bcc6b6d9827f760a68436a3fe1b433a6eeca0a2b92bcddb36e" => :sierra
@@ -20,20 +21,6 @@ class Mesos < Formula
 
   conflicts_with "nanopb-generator", :because => "they depend on an incompatible version of protobuf"
   conflicts_with "rapidjson", :because => "mesos installs a copy of rapidjson headers"
-
-  if DevelopmentTools.clang_build_version >= 802 # does not affect < Xcode 8.3
-    # _scheduler.so segfault when Mesos is built with Xcode 8.3.2
-    # Reported 29 May 2017 https://issues.apache.org/jira/browse/MESOS-7583
-    # The issue does not occur with Xcode 9 beta 3.
-    fails_with :clang do
-      build 802
-      cause "Segmentation fault in _scheduler.so"
-    end
-  end
-
-  # error: 'Megabytes(32).Megabytes::<anonymous>' is not a constant expression
-  # because it refers to an incompletely initialized variable
-  fails_with :gcc => "7"
 
   resource "protobuf" do
     url "https://files.pythonhosted.org/packages/1b/90/f531329e628ff34aee79b0b9523196eb7b5b6b398f112bb0c03b24ab1973/protobuf-3.6.1.tar.gz"

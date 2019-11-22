@@ -5,9 +5,10 @@ class Ruby < Formula
   sha256 "d5d6da717fd48524596f9b78ac5a2eeb9691753da5c06923a6c31190abe01a62"
 
   bottle do
-    sha256 "d89d215e43e85bdba4a7b6788147012aa8046c6478841164fffe7a71a329668d" => :catalina
-    sha256 "e30782df0575e8df1bc3c23da701644919099cc31f6b05b163cde847d116414c" => :mojave
-    sha256 "74f4f0ab096360f89651801e8e7361bbeb0dfdfea3fb912909b3a290116adc85" => :high_sierra
+    rebuild 1
+    sha256 "74304ae76b81629a80edb0655c34883b00ab674fa10e0db4bd5336015acc5e17" => :catalina
+    sha256 "da318a12d35502d95a8bea49f735bb74af72cdb38b687b2f565d75b139941736" => :mojave
+    sha256 "9416860e0cd56aa45bfce03801a81eefcb0a25e0ccb123a82c51f5f1b6911abb" => :high_sierra
   end
 
   head do
@@ -140,7 +141,7 @@ class Ruby < Formula
           "#{api_version}"
         ]
 
-        @default_dir ||= File.join(*path)
+        @homebrew_path ||= File.join(*path)
       end
 
       def self.private_dir
@@ -170,9 +171,9 @@ class Ruby < Formula
 
       def self.default_path
         if Gem.user_home && File.exist?(Gem.user_home)
-          [user_dir, default_dir, private_dir]
+          [user_dir, default_dir, old_default_dir, private_dir]
         else
-          [default_dir, private_dir]
+          [default_dir, old_default_dir, private_dir]
         end
       end
 
@@ -182,6 +183,13 @@ class Ruby < Formula
 
       def self.ruby
         "#{opt_bin}/ruby"
+      end
+
+      # https://github.com/Homebrew/homebrew-core/issues/40872#issuecomment-542092547
+      class BasicSpecification
+        def self.default_specifications_dir
+          File.join(Gem.old_default_dir, "specifications", "default")
+        end
       end
     end
   EOS

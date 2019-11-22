@@ -1,7 +1,7 @@
 class Libimobiledevice < Formula
   desc "Library to communicate with iOS devices natively"
   homepage "https://www.libimobiledevice.org/"
-  revision 4
+  revision 6
 
   stable do
     url "https://www.libimobiledevice.org/downloads/libimobiledevice-1.2.0.tar.bz2"
@@ -22,10 +22,9 @@ class Libimobiledevice < Formula
 
   bottle do
     cellar :any
-    sha256 "1412c130876a6a5a4e29363991a579efb588e19833389c008d7a6333b678e8be" => :catalina
-    sha256 "99d1470015cf12ab07eeface014ca53393f6e45d9e3c08fb83f0bc8b46ecf62a" => :mojave
-    sha256 "304bec377d90ced3021162970eb92e73e991c985a7cc62861423656c5d0a1174" => :high_sierra
-    sha256 "7dbc19fb30bec28477e82ee91162ade399f3434c4c75637f7f3f7e6e8b02bf8b" => :sierra
+    sha256 "27409d27b5532a572a4a8eeec891e1cce92bc0afa423528eae94543f22aa72aa" => :catalina
+    sha256 "672ac6aaf5656e07add1b5da7c3a30c0655ce2b9efff957faa34855ed34d9dde" => :mojave
+    sha256 "14e8fb93dbb63ceca4c66163d1f9bfe7db5bcbc581ae4ca3e3cc8dc0ab93eeb4" => :high_sierra
   end
 
   head do
@@ -39,8 +38,8 @@ class Libimobiledevice < Formula
   depends_on "pkg-config" => :build
   depends_on "libplist"
   depends_on "libtasn1"
+  depends_on "libusbmuxd"
   depends_on "openssl@1.1"
-  depends_on "usbmuxd"
 
   def install
     system "./autogen.sh" if build.head?

@@ -1,24 +1,20 @@
 class Arangodb < Formula
   desc "The Multi-Model NoSQL Database"
   homepage "https://www.arangodb.com/"
-  url "https://download.arangodb.com/Source/ArangoDB-3.5.0.tar.gz"
-  sha256 "b81e30da4249f72b8daa88584cd05388c86ab12eb3185f6558a774e8db5dc9ab"
-  revision 1
+  url "https://download.arangodb.com/Source/ArangoDB-3.5.2.tar.gz"
+  sha256 "9331ddb8d745c5d977975591b20a00461bfe11865bfce9f3495dc8bdb9260bf1"
   head "https://github.com/arangodb/arangodb.git", :branch => "devel"
 
   bottle do
-    sha256 "c5f3e3fbe5d695597bf20a95e8c2ffdb6e8b74bee6ef3fd7989555ac8f9d718b" => :mojave
-    sha256 "e8053c9157efe620fe7d2660993ac7f929a9a914e2a5bc758f52d5c80de9fe84" => :high_sierra
-    sha256 "431fb46ca96833c6c097b3e132a3210afb8bc954d2106a823099731733bcc220" => :sierra
+    sha256 "5e86cc8536055411a87d0e98329a07edf77b54e5624fab7cb7ae3d0e5a11cc0b" => :catalina
+    sha256 "c37fb40d99c4ade05624bfbe6200be512de4d2f234479ac356d459fde3c1ebd1" => :mojave
   end
 
+  depends_on "ccache" => :build
   depends_on "cmake" => :build
   depends_on "go" => :build
-  depends_on :macos => :yosemite
+  depends_on :macos => :mojave
   depends_on "openssl@1.1"
-
-  # see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=87665
-  fails_with :gcc => "7"
 
   # the ArangoStarter is in a separate github repository;
   # it is used to easily start single server and clusters
@@ -29,7 +25,7 @@ class Arangodb < Formula
   end
 
   def install
-    ENV.cxx11
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
 
     resource("starter").stage do
       ENV.append "GOPATH", Dir.pwd + "/.gobuild"
@@ -45,14 +41,18 @@ class Arangodb < Formula
     mkdir "build" do
       args = std_cmake_args + %W[
         -DHOMEBREW=ON
-        -DUSE_OPTIMIZE_FOR_ARCHITECTURE=OFF
-        -DASM_OPTIMIZATIONS=OFF
-        -DCMAKE_INSTALL_DATADIR=#{share}
-        -DCMAKE_INSTALL_DATAROOTDIR=#{share}
-        -DCMAKE_INSTALL_SYSCONFDIR=#{etc}
-        -DCMAKE_INSTALL_LOCALSTATEDIR=#{var}
-        -DCMAKE_OSX_DEPLOYMENT_TARGET=#{MacOS.version}
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        -DUSE_MAINTAINER_MODE=Off
         -DUSE_JEMALLOC=Off
+        -DCMAKE_SKIP_RPATH=On
+        -DOPENSSL_USE_STATIC_LIBS=On
+        -DCMAKE_LIBRARY_PATH=#{prefix}/opt/openssl@1.1/lib
+        -DOPENSSL_ROOT_DIR=#{prefix}/opt/openssl@1.1/lib
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=#{MacOS.version}
+        -DTARGET_ARCHITECTURE=nehalem
+        -DUSE_CATCH_TESTS=Off
+        -DUSE_GOOGLE_TESTS=Off
+        -DCMAKE_INSTALL_LOCALSTATEDIR=#{var}
       ]
 
       if ENV.compiler == "gcc-6"
@@ -61,10 +61,6 @@ class Arangodb < Formula
 
       system "cmake", "..", *args
       system "make", "install"
-
-      %w[arangod arango-dfdb arangosh foxx-manager].each do |f|
-        inreplace etc/"arangodb3/#{f}.conf", pkgshare, opt_pkgshare
-      end
     end
   end
 

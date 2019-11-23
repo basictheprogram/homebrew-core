@@ -1,15 +1,14 @@
 class Libheif < Formula
   desc "ISO/IEC 23008-12:2017 HEIF file format decoder and encoder"
   homepage "https://www.libde265.org/"
-  url "https://github.com/strukturag/libheif/releases/download/v1.5.1/libheif-1.5.1.tar.gz"
-  sha256 "b134d0219dd2639cc13b8a8bcb8f264834593dd0417da1973fbe96e810918a8b"
-  revision 1
+  url "https://github.com/strukturag/libheif/releases/download/v1.6.0/libheif-1.6.0.tar.gz"
+  sha256 "f00ad182cb21aa57218cb7ba222163376e74e3b7de1723fd789508a296c9e868"
 
   bottle do
     cellar :any
-    sha256 "f235d5064cc657703b32d5b750bf2a800f7913eaafa98c76c0a86317e4aaa51f" => :catalina
-    sha256 "02b085da5ba7505e965236cd49816af0ae1f7faf49a29883bc783784cb410e9a" => :mojave
-    sha256 "d2333abea3014217cfdb78b126f0b8c404fea11550e3e104eed7c267711febfe" => :high_sierra
+    sha256 "0fc77c14dc4528aab60296ca21e215202d1d5bb8eede62e9230d25ea956561a2" => :catalina
+    sha256 "6a4a3ff9c1a9b85437866afd831f6287bc430b018b7b2ee1c5dcfdb3efcb4fe8" => :mojave
+    sha256 "d9b96ad39ceb88a37b061a8588e9e6d434099b3d93d9a02104667b675e1c71c0" => :high_sierra
   end
 
   depends_on "pkg-config" => :build

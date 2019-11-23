@@ -3,14 +3,13 @@ class Osquery < Formula
   homepage "https://osquery.io"
   url "https://github.com/facebook/osquery/archive/3.3.2.tar.gz"
   sha256 "74280181f45046209053a3e15114d93adc80929a91570cc4497931cfb87679e4"
-  revision 7
+  revision 9
 
   bottle do
     cellar :any
-    sha256 "16662c8d802d1b14b8fe51b4bd42707cf556e6567a86f2bb2886204ce68b5ab9" => :catalina
-    sha256 "1480020e674965e23dd59cd6dee6ad2209d55b839c958ff236c525a8a57a7ba2" => :mojave
-    sha256 "32a3852dbd1f226a30d2c6003b1c1397ef49c4339eb17bda466bf1f982fc4ee3" => :high_sierra
-    sha256 "75f51a577ccfa48c10b8af7d5f7cd766fc133784b74cd26eb46529fa64553d62" => :sierra
+    sha256 "404a62c344cd4e6859cbceb6e77d9c1db4e830d512b4b667729641979d032cdd" => :catalina
+    sha256 "532a3d4f4a7c7a0370e86b415dfa205d149f25b4b0c7fcf5f83e4c4e5cea7a1b" => :mojave
+    sha256 "ce02e277e11f0960e0f945f00bf36be773911682cbb8934c14d2cc83a0798253" => :high_sierra
   end
 
   depends_on "bison" => :build
@@ -35,8 +34,6 @@ class Osquery < Formula
   depends_on "xz"
   depends_on "yara"
   depends_on "zstd"
-
-  fails_with :gcc => "6"
 
   resource "MarkupSafe" do
     url "https://files.pythonhosted.org/packages/c0/41/bae1254e0396c0cc8cf1751cb7d9afc90a602353695af5952530482c963f/MarkupSafe-0.23.tar.gz"
@@ -67,7 +64,10 @@ class Osquery < Formula
 
   # Patch for compatibility with OpenSSL 1.1
   # submitted upstream: https://github.com/osquery/osquery/issues/5755
-  patch :DATA
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/85fa66a9/osquery/openssl-1.1.diff"
+    sha256 "18ace03c11e06b0728060382284a8da115bd6e14247db20ac0188246e5ff8af4"
+  end
 
   def install
     ENV.cxx11
@@ -145,67 +145,3 @@ class Osquery < Formula
     assert_match "platform_info", shell_output("#{bin}/osqueryi -L")
   end
 end
-__END__
-diff -pur osquery-3.3.2/osquery/tables/system/darwin/certificates.mm osquery-3.3.2-fixed/osquery/tables/system/darwin/certificates.mm
---- osquery-3.3.2/osquery/tables/system/darwin/certificates.mm	2018-10-29 22:24:29.000000000 +0100
-+++ osquery-3.3.2-fixed/osquery/tables/system/darwin/certificates.mm	2019-09-07 16:25:24.000000000 +0200
-@@ -20,6 +20,7 @@ namespace tables {
-
- void genCertificate(X509* cert, const std::string& path, QueryData& results) {
-   Row r;
-+  const ASN1_OCTET_STRING *s;
-
-   // Generate the common name and subject.
-   // They are very similar OpenSSL API accessors so save some logic and
-@@ -42,13 +43,11 @@ void genCertificate(X509* cert, const st
-   // so it should be called before others.
-   r["ca"] = (CertificateIsCA(cert)) ? INTEGER(1) : INTEGER(0);
-   r["self_signed"] = (CertificateIsSelfSigned(cert)) ? INTEGER(1) : INTEGER(0);
--  r["key_usage"] = genKeyUsage(cert->ex_kusage);
--  r["authority_key_id"] =
--      (cert->akid && cert->akid->keyid)
--          ? genKIDProperty(cert->akid->keyid->data, cert->akid->keyid->length)
--          : "";
--  r["subject_key_id"] =
--      (cert->skid) ? genKIDProperty(cert->skid->data, cert->skid->length) : "";
-+  r["key_usage"] = genKeyUsage(X509_get_key_usage(cert));
-+  s = X509_get0_authority_key_id(cert);
-+  r["authority_key_id"] = s ? genKIDProperty(s->data, s->length) : "";
-+  s = X509_get0_subject_key_id(cert);
-+  r["subject_key_id"] = s ? genKIDProperty(s->data, s->length) : "";
-
-   r["serial"] = genSerialForCertificate(cert);
-
-diff -pur osquery-3.3.2/osquery/tables/system/darwin/keychain_utils.cpp osquery-3.3.2-fixed/osquery/tables/system/darwin/keychain_utils.cpp
---- osquery-3.3.2/osquery/tables/system/darwin/keychain_utils.cpp	2018-10-29 22:24:29.000000000 +0100
-+++ osquery-3.3.2-fixed/osquery/tables/system/darwin/keychain_utils.cpp	2019-09-07 17:03:59.000000000 +0200
-@@ -84,7 +84,10 @@ void genAlgorithmProperties(X509* cert,
-                             std::string& sig,
-                             std::string& size) {
-   int nid = 0;
--  nid = OBJ_obj2nid(cert->cert_info->key->algor->algorithm);
-+  ASN1_OBJECT *ppkalg;
-+  X509_PUBKEY *pubkey = X509_get_X509_PUBKEY(cert);
-+  X509_PUBKEY_get0_param(&ppkalg, NULL, NULL, NULL, pubkey);
-+  nid = OBJ_obj2nid(ppkalg);
-   if (nid != NID_undef) {
-     key = std::string(OBJ_nid2ln(nid));
-
-@@ -101,7 +104,7 @@ void genAlgorithmProperties(X509* cert,
-       // The EVP_size for EC keys returns the maximum buffer for storing the
-       // key data, it does not indicate the size/strength of the curve.
-       if (nid == NID_X9_62_id_ecPublicKey) {
--        const EC_KEY* ec_pkey = pkey->pkey.ec;
-+        const EC_KEY* ec_pkey = EVP_PKEY_get0_EC_KEY(pkey);
-         const EC_GROUP* ec_pkey_group = nullptr;
-         ec_pkey_group = EC_KEY_get0_group(ec_pkey);
-         int curve_nid = 0;
-@@ -114,7 +117,7 @@ void genAlgorithmProperties(X509* cert,
-     EVP_PKEY_free(pkey);
-   }
-
--  nid = OBJ_obj2nid(cert->cert_info->signature->algorithm);
-+  nid = OBJ_obj2nid(X509_get0_tbs_sigalg(cert)->algorithm);
-   if (nid != NID_undef) {
-     sig = std::string(OBJ_nid2ln(nid));
-   }

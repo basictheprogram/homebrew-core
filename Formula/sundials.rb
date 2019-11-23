@@ -1,16 +1,14 @@
 class Sundials < Formula
   desc "Nonlinear and differential/algebraic equations solver"
   homepage "https://computation.llnl.gov/casc/sundials/main.html"
-  url "https://computation.llnl.gov/projects/sundials/download/sundials-4.1.0.tar.gz"
-  sha256 "280de1c27b2360170a6f46cb3799b2aee9dff3bddbafc8b08c291a47ab258aa5"
-  revision 2
+  url "https://computation.llnl.gov/projects/sundials/download/sundials-5.0.0.tar.gz"
+  sha256 "345141ec01c641d0bdfb3476c478b7e74fd6a7192a478a27cafe75d9da2d7dd3"
 
   bottle do
     cellar :any
-    sha256 "de1b2b9fa513d372b7f53a9354b1d0ff4675b6055f9bf0d42a4dad0a693064ac" => :catalina
-    sha256 "da83304cfc31d4b07693b64271dcceb940446616551aaf3ccd82945be923116c" => :mojave
-    sha256 "15e9971b298bfaf56193a982e161e3011f7af31717486343892a1186f56466d3" => :high_sierra
-    sha256 "93bdbe8c2cef3dbd89358a3c92ad19f4ed51e9060dafb2d04196c4333ebd8da3" => :sierra
+    sha256 "b9bca7d111f7180280b814f452aaca92474b6a923ec229e4c9c93505f668024e" => :catalina
+    sha256 "0446a14944b70fcffab57ea46fc48532c76817fb1e57ca3184231414a3e748c7" => :mojave
+    sha256 "7e6f17174a9d1781fc1cb81e16ffde13213c4f8af2a9027bc348604aa39bde00" => :high_sierra
   end
 
   depends_on "cmake" => :build

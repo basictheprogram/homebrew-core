@@ -1,14 +1,13 @@
 class Atlantis < Formula
   desc "Terraform Pull Request Automation tool"
   homepage "https://www.runatlantis.io/"
-  url "https://github.com/runatlantis/atlantis/archive/v0.9.0.tar.gz"
-  sha256 "ff3b8b38c59c54ff9ff2dfd0c53c69af5308a6c6f64f92d1c4ece87a7d35f1c6"
+  url "https://github.com/runatlantis/atlantis/archive/v0.10.1.tar.gz"
+  sha256 "98a1dae80acfa1c322007d4a2e29a28733edc386d74b9b3b07608fe64820a843"
   bottle do
     cellar :any_skip_relocation
-    sha256 "a3847caa6e3d3ca2e75ea11b3b33768c77a13e16f02ef086ad8dc9e3df1bf0ff" => :catalina
-    sha256 "2ecb14619c287f84755169dc93e717b12821df7ea24fec9a6960361e360c481b" => :mojave
-    sha256 "679f5cd00ccf005c615dac181a872fd4edf07e5bc901116cd2a0fe25fa39ed18" => :high_sierra
-    sha256 "2f23a7d6cc16f93dc87a455da15e297ce490f7df859a49dd04bf855b3519511a" => :sierra
+    sha256 "6a7ecd37325d562a499a19b4080fd56bc19146e363e3c536538928b48dad11c0" => :catalina
+    sha256 "c8dab2be57c47e361cbadc2b5e61d4292d6a440bc7adcfd03371e9510ca38625" => :mojave
+    sha256 "a430e649cbb7b4780f875f874254444f59d9f5094be0761d1e8010c510f14525" => :high_sierra
   end
 
   depends_on "go" => :build

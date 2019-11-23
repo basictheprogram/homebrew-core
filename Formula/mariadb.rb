@@ -1,24 +1,24 @@
 class Mariadb < Formula
   desc "Drop-in replacement for MySQL"
   homepage "https://mariadb.org/"
-  url "https://downloads.mariadb.org/f/mariadb-10.4.6/source/mariadb-10.4.6.tar.gz"
-  sha256 "a270fe6169a1aaf6f2cbbc945de2c954d818c48e1a0fc02fbed92ecb94678e70"
+  url "https://downloads.mariadb.org/f/mariadb-10.4.10/source/mariadb-10.4.10.tar.gz"
+  sha256 "cd50fddf86c2a47405737e342f78ebd40d5716f0fb32b976245de713bed01421"
   revision 1
 
   bottle do
-    sha256 "9ddfc28d0f7598ad26f104cf7eea3ebf5f4eaad118357d00cf46ec7178e24f95" => :catalina
-    sha256 "c4788018647187516423a4cf4a6f7af859ff46f65c096c77537e286cd2ace7f8" => :mojave
-    sha256 "2333b6eca8374ee31400f4996015ebef58341c1ece7f1d27f68b8b0e098de4ab" => :high_sierra
-    sha256 "33c334eb3869201d00935ade66d0e32ba61879816875c640b290aa9f0b2a6696" => :sierra
+    rebuild 1
+    sha256 "18e0955580bab62f509fdb8d86be34067a9081bacf9f79a1effb6c1a9cfc2a38" => :catalina
+    sha256 "ffa3588886d847ecfaae8806f2212446103279d2b1be99c61c17e18e0c5cd820" => :mojave
+    sha256 "bf7d36b6e56a9d44991abb5f249ccaa0dcebae715262b7560fc46a5f17011cbf" => :high_sierra
   end
 
   depends_on "cmake" => :build
+  depends_on "pkg-config" => :build
+  depends_on "groonga"
   depends_on "openssl@1.1"
 
   conflicts_with "mysql", "percona-server",
     :because => "mariadb, mysql, and percona install the same binaries"
-  conflicts_with "mysql-connector-c",
-    :because => "both install MySQL client libraries"
   conflicts_with "mytop", :because => "both install `mytop` binaries"
   conflicts_with "mariadb-connector-c",
     :because => "both install plugins"
@@ -31,6 +31,9 @@ class Mariadb < Formula
       s.change_make_var! "basedir", "\"#{prefix}\""
       s.change_make_var! "ldata", "\"#{var}/mysql\""
     end
+
+    # Use brew groonga
+    rm_r "storage/mroonga/vendor/groonga"
 
     # -DINSTALL_* are relative to prefix
     args = %W[

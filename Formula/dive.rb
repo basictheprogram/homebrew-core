@@ -2,24 +2,17 @@ class Dive < Formula
   desc "Tool for exploring each layer in a docker image"
   homepage "https://github.com/wagoodman/dive"
   url "https://github.com/wagoodman/dive.git",
-    :tag      => "v0.8.1",
-    :revision => "f2ea8b503d3cb06d1be611dcb32f0ef6b161b511"
+    :tag      => "v0.9.1",
+    :revision => "bfcfc54ee34b623274a91ca48379ac229b5415c2"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "94f8a800872f594e4e59afc0b7350135d6457470267d67f1bcf5239c43585d40" => :catalina
-    sha256 "fcff37f6efea602e0909136a76cbdeef185f6097ae5d8c1362e42b2137648768" => :mojave
-    sha256 "7c194d07ddf7f27bf792dddd5efebedd70e183c6680fe786e4a774e7d25c4e8d" => :high_sierra
-    sha256 "1f8cbf97ea22b6ab7ee29dc31c1c2c54e0cb5ad22cc08ed8b4d108a81a4252ac" => :sierra
+    sha256 "ca95c04566151ebd4ef7b16505c825aefc109fe5c5b8994c43c9e37e00f34fca" => :catalina
+    sha256 "83a9ca47c8ada30d73177485c3b660b8815cbce9bdd71fe9d713ee4de195ffc2" => :mojave
+    sha256 "4c2b212f5447326dc667753c289fe3192719515bed98102ec4061f8be5631005" => :high_sierra
   end
 
   depends_on "go" => :build
-
-  # Remove this patch in the next version.
-  patch do
-    url "https://github.com/wagoodman/dive/commit/f48715d4c536fdaf0ec57277f2677e4ed8076ad3.patch?full_index=1"
-    sha256 "e13be53a71bca7e5393f7a1cdbbcb2691470be9227e384dc7c97b2bb1b49a40c"
-  end
 
   def install
     ENV["GOPATH"] = buildpath

@@ -1,16 +1,15 @@
 class Git < Formula
   desc "Distributed revision control system"
   homepage "https://git-scm.com"
-  url "https://www.kernel.org/pub/software/scm/git/git-2.23.0.tar.xz"
-  sha256 "234fa05b6839e92dc300b2dd78c92ec9c0c8d439f65e1d430a7034f60af16067"
-  revision 1
+  url "https://www.kernel.org/pub/software/scm/git/git-2.24.0.tar.xz"
+  sha256 "9f71d61973626d8b28c4cdf8e2484b4bf13870ed643fed982d68b2cfd754371b"
+  revision 2
   head "https://github.com/git/git.git", :shallow => false
 
   bottle do
-    sha256 "cb74c5f3a0e89f7415e9846f96e2d4502284281bd0d2c87a0517e57d9c242cb9" => :catalina
-    sha256 "846c80d096bd49662e34de8144e73b2df017a3acb35a15942429e111951ba343" => :mojave
-    sha256 "123e7a9eb96d58ebd1100880018e5f99626bb99e751d99fc62a4183d926a4988" => :high_sierra
-    sha256 "95b84a677d97a9c522ec0e89cde3967a21c795b47181bf6ba20002f1962dd73c" => :sierra
+    sha256 "87100f6c01be17be5501be0ee5d674610e594ee0ae2d57ac3a2ebefec601e589" => :catalina
+    sha256 "343c1a0b842b84095aa0632ea7ca3f1717103fe4f393a6014c7f6165b079c849" => :mojave
+    sha256 "c4c40270f2acd82234660d8e1b3093294222fd8dc47687fc575815ed8544baf0" => :high_sierra
   end
 
   depends_on "gettext"
@@ -22,13 +21,13 @@ class Git < Formula
   end
 
   resource "html" do
-    url "https://www.kernel.org/pub/software/scm/git/git-htmldocs-2.23.0.tar.xz"
-    sha256 "b7959afd19554aeaaa455c88eeed2c164854391f13319bd3fa7df2577c57ddc8"
+    url "https://www.kernel.org/pub/software/scm/git/git-htmldocs-2.24.0.tar.xz"
+    sha256 "05b6ed0719d5e29d5c60dd7d0a5469f4a0514008a64f6084ac26335d1b37f73b"
   end
 
   resource "man" do
-    url "https://www.kernel.org/pub/software/scm/git/git-manpages-2.23.0.tar.xz"
-    sha256 "9558433f68ff4229bd55e84c4d26b74e5d3518ab0ec30186253b090ea887946a"
+    url "https://www.kernel.org/pub/software/scm/git/git-manpages-2.24.0.tar.xz"
+    sha256 "b0c872c16f22942c1cb6c90ec07f395a931f7c2f9fb920d2ec926674265c04a6"
   end
 
   resource "Net::SMTP::SSL" do
@@ -60,6 +59,13 @@ class Git < Formula
 
     unless quiet_system ENV["PERL_PATH"], "-e", "use ExtUtils::MakeMaker"
       ENV["NO_PERL_MAKEMAKER"] = "1"
+    end
+
+    # Ensure we are using the correct system headers (for curl) to workaround
+    # mismatched Xcode/CLT versions:
+    # https://github.com/Homebrew/homebrew-core/issues/46466
+    if MacOS.version == :mojave && MacOS::CLT.installed? && MacOS::CLT.provides_sdk?
+      ENV["HOMEBREW_SDKROOT"] = MacOS::CLT.sdk_path(MacOS.version)
     end
 
     args = %W[

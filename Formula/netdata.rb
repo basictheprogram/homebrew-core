@@ -1,21 +1,48 @@
 class Netdata < Formula
   desc "Distributed real-time performance and health monitoring"
   homepage "https://my-netdata.io/"
-  url "https://github.com/netdata/netdata/archive/v1.18.0.tar.gz"
-  sha256 "8396e818f8fe5c1ce345e99a74da8204970810095047dcf5feffee28d35cc937"
+  url "https://github.com/netdata/netdata/releases/download/v1.18.1/netdata-v1.18.1.tar.gz"
+  sha256 "39cca83e810296177ea255deef9961631480cb911da68dde7ac5a339cc95e521"
 
   bottle do
-    sha256 "efe65bb8b214bb5e1a7190f0ae1e8d40260988274ba8cfaadbb6c25bdf0f5b60" => :catalina
-    sha256 "fa78287208be945689ed30e431c1b5bf942410e02efffc0aab2158d8e1571a4e" => :mojave
-    sha256 "2b5bd72d0c2c0d7247dd188a46146ed266778bc85f7b73077dfa9f33ad9ffd4c" => :high_sierra
+    rebuild 1
+    sha256 "84efcd6425d799cdaa275e451e0817c7b4254679161b4b56eb0ea7e7b12fd90d" => :catalina
+    sha256 "58e13b46d8a49d0bcb3a46dd96361b1800c217c3d94b3a2180213760c16b32a5" => :mojave
+    sha256 "207101244660ee19ea4f56ab0c77c24d5fc51ff333892191e2ae1e0ea0db5433" => :high_sierra
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "pkg-config" => :build
-  depends_on "openssl@1.1" if MacOS.version <= :sierra
+  depends_on "json-c"
+  depends_on "libuv"
+  depends_on "lz4"
+  depends_on "openssl@1.1"
+
+  resource "judy" do
+    url "https://downloads.sourceforge.net/project/judy/judy/Judy-1.0.5/Judy-1.0.5.tar.gz"
+    sha256 "d2704089f85fdb6f2cd7e77be21170ced4b4375c03ef1ad4cf1075bd414a63eb"
+  end
 
   def install
+    # We build judy as static library, so we don't need to install it
+    # into the real prefix
+    judyprefix = "#{buildpath}/resources/judy"
+
+    resource("judy").stage do
+      system "./configure", "--disable-debug", "--disable-dependency-tracking",
+          "--disable-shared", "--prefix=#{judyprefix}"
+
+      # Parallel build is broken
+      ENV.deparallelize do
+        system "make", "-j1", "install"
+      end
+    end
+
+    ENV["PREFIX"] = prefix
+    ENV.append "CFLAGS", "-I#{judyprefix}/include"
+    ENV.append "LDFLAGS", "-L#{judyprefix}/lib"
+
     system "autoreconf", "-ivf"
     system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",
@@ -25,6 +52,7 @@ class Netdata < Formula
                           "--libexecdir=#{libexec}",
                           "--with-math",
                           "--with-zlib",
+                          "--enable-dbengine",
                           "--with-user=netdata",
                           "UUID_CFLAGS=-I/usr/include",
                           "UUID_LIBS=-lc"

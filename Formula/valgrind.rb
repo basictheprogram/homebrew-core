@@ -1,6 +1,6 @@
 class Valgrind < Formula
   desc "Dynamic analysis tools (memory, debug, profiling)"
-  homepage "http://www.valgrind.org/"
+  homepage "https://www.valgrind.org/"
 
   stable do
     url "https://sourceware.org/pub/valgrind/valgrind-3.15.0.tar.bz2"
@@ -37,7 +37,7 @@ class Valgrind < Formula
     system "./autogen.sh" if build.head?
 
     # Look for headers in the SDK on Xcode-only systems: https://bugs.kde.org/show_bug.cgi?id=295084
-    unless MacOS::CLT.installed?
+    if build.stable? && !MacOS::CLT.installed?
       inreplace "coregrind/Makefile.in", %r{(\s)(?=/usr/include/mach/)}, '\1'+MacOS.sdk_path.to_s
     end
 

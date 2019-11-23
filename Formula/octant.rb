@@ -1,17 +1,16 @@
 class Octant < Formula
   desc "Kubernetes introspection tool for developers"
-  homepage "https://github.com/vmware/octant"
-  url "https://github.com/vmware/octant.git",
-      :tag      => "v0.7.0",
-      :revision => "632f678f1706ad6ce3e725e30f3d267d7231b136"
-  head "https://github.com/vmware/octant.git"
+  homepage "https://octant.dev"
+  url "https://github.com/vmware-tanzu/octant.git",
+      :tag      => "v0.9.1",
+      :revision => "7c4bd4a03489aebba979a09aeda0c4c390650e94"
+  head "https://github.com/vmware-tanzu/octant.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "adff5d7e62c5d40c887adf3ba788dd5424d85fd09618f439230d50d1f28cfbc4" => :catalina
-    sha256 "7c3f8a3f5d2f8888368bf6f24c0b28c4d516ed005c3c5aba3c485fc72eda1414" => :mojave
-    sha256 "b60233f74ae10e0b5bdb3f7003676db10e2d8daf177ddd0245389521001379a6" => :high_sierra
-    sha256 "bcab9204ffb24a70f5a9d838c1494e932d641c281b5ba6c13a87ab4aca90ebd3" => :sierra
+    sha256 "52126ba28e36f505b3a407bfd217116b57bf53bcfab687fa264e636bf41ff7bd" => :catalina
+    sha256 "c7ce2a9e152cb3cd1f7f97392e26d6ace65fb5205a4aa2d8dfc02319edb9b7ce" => :mojave
+    sha256 "81dcc583665d254bc84d53b15a357b135a859ed5831a14333c92afc00e9ee28a" => :high_sierra
   end
 
   depends_on "go" => :build
@@ -22,10 +21,10 @@ class Octant < Formula
     ENV["GOPATH"] = buildpath
     ENV["GOFLAGS"] = "-mod=vendor"
 
-    dir = buildpath/"src/github.com/vmware/octant"
+    dir = buildpath/"src/github.com/vmware-tanzu/octant"
     dir.install buildpath.children
 
-    cd "src/github.com/vmware/octant" do
+    cd "src/github.com/vmware-tanzu/octant" do
       system "make", "go-install"
       ENV.prepend_path "PATH", buildpath/"bin"
 

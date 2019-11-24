@@ -117,6 +117,6 @@ class Imapsync < Formula
     assert_match version.to_s, pipe_output("#{bin}/imapsync --dry")
     shell_output("#{bin}/imapsync --dry \
        --host1 test1.lamiral.info --user1 test1 --password1 secret1 \
-       --host2 test2.lamiral.info --user2 test2 --password2 secret2", 0)
+       --host2 test2.lamiral.info --user2 test2 --password2 secret2")
   end
 end

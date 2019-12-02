@@ -3,6 +3,7 @@ class Geos < Formula
   homepage "https://trac.osgeo.org/geos"
   url "https://download.osgeo.org/geos/geos-3.8.0.tar.bz2"
   sha256 "99114c3dc95df31757f44d2afde73e61b9f742f0b683fd1894cbbee05dda62d5"
+  revision 1
 
   bottle do
     cellar :any
@@ -12,7 +13,7 @@ class Geos < Formula
   end
 
   depends_on "swig" => :build
-  depends_on "python"
+  depends_on "python@3.8"
 
   def install
     # https://trac.osgeo.org/geos/ticket/771
@@ -24,7 +25,7 @@ class Geos < Formula
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}",
                           "--enable-python",
-                          "PYTHON=#{Formula["python"].opt_bin}/python3"
+                          "PYTHON=#{Formula["python@3.8"].opt_bin}/python3"
     system "make", "install"
   end
 

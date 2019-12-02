@@ -3,6 +3,7 @@ class Pygobject3 < Formula
   homepage "https://wiki.gnome.org/Projects/PyGObject"
   url "https://download.gnome.org/sources/pygobject/3.34/pygobject-3.34.0.tar.xz"
   sha256 "87e2c9aa785f352ef111dcc5f63df9b85cf6e05e52ff04f803ffbebdacf5271a"
+  revision 1
 
   bottle do
     cellar :any
@@ -17,7 +18,7 @@ class Pygobject3 < Formula
   depends_on "pkg-config" => :build
   depends_on "gobject-introspection"
   depends_on "py3cairo"
-  depends_on "python"
+  depends_on "python@3.8"
 
   def install
     mkdir "buildpy3" do

@@ -3,6 +3,7 @@ class GstPython < Formula
   homepage "https://gstreamer.freedesktop.org/modules/gst-python.html"
   url "https://gstreamer.freedesktop.org/src/gst-python/gst-python-1.16.1.tar.xz"
   sha256 "b469c8955126f41b8ce0bf689b7029f182cd305f422b3a8df35b780bd8347489"
+  revision 1
 
   bottle do
     cellar :any
@@ -14,20 +15,23 @@ class GstPython < Formula
 
   depends_on "gst-plugins-base"
   depends_on "pygobject3"
-  depends_on "python"
+  depends_on "python@3.8"
 
   def install
     python_version = Language::Python.major_minor_version("python3")
+    python_flags = `python3-config --ldflags --embed`.chomp
     # pygi-overrides-dir switch ensures files don't break out of sandbox.
     system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",
                           "--prefix=#{prefix}",
                           "--with-pygi-overrides-dir=#{lib}/python#{python_version}/site-packages/gi/overrides",
-                          "PYTHON=python3"
+                          "PYTHON=python3",
+                          "LDFLAGS=#{python_flags}"
     system "make", "install"
   end
 
   test do
+
     system "#{Formula["gstreamer"].opt_bin}/gst-inspect-1.0", "python"
     # Without gst-python raises "TypeError: object() takes no parameters"
     system "python3", "-c", <<~EOS

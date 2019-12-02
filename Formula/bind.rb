@@ -10,6 +10,7 @@ class Bind < Formula
 
   url "https://ftp.isc.org/isc/bind/9.14.8/bind-9.14.8.tar.gz"
   sha256 "e545aa75ced6695a9bf4b591606ef00260fb3c055c2865b299cfe0fe6eeea076"
+  revision 1
   version_scheme 1
   head "https://gitlab.isc.org/isc-projects/bind9.git"
 
@@ -21,7 +22,7 @@ class Bind < Formula
 
   depends_on "json-c"
   depends_on "openssl@1.1"
-  depends_on "python"
+  depends_on "python@3.8"
 
   resource "ply" do
     url "https://files.pythonhosted.org/packages/e5/69/882ee5c9d017149285cab114ebeab373308ef0f874fcdac9beb90e0ac4da/ply-3.11.tar.gz"
@@ -46,7 +47,7 @@ class Bind < Formula
     system "./configure", "--prefix=#{prefix}",
                           "--with-openssl=#{Formula["openssl@1.1"].opt_prefix}",
                           "--with-libjson=#{Formula["json-c"].opt_prefix}",
-                          "--with-python=#{Formula["python"].opt_bin}/python3",
+                          "--with-python=#{Formula["python@3.8"].opt_bin}/python3",
                           "--with-python-install-dir=#{vendor_site_packages}",
                           "--without-lmdb"
 

@@ -3,7 +3,7 @@ class ApacheArrow < Formula
   homepage "https://arrow.apache.org/"
   url "https://www.apache.org/dyn/closer.cgi?path=arrow/arrow-0.15.1/apache-arrow-0.15.1.tar.gz"
   sha256 "9a2c58c72310eafebb4997244cbeeb8c26696320d0ae3eb3e8512f75ef856fc9"
-  revision 3
+  revision 4
   head "https://github.com/apache/arrow.git"
 
   bottle do
@@ -25,7 +25,7 @@ class ApacheArrow < Formula
   depends_on "numpy"
   depends_on "openssl@1.1"
   depends_on "protobuf"
-  depends_on "python"
+  depends_on "python@3.8"
   depends_on "rapidjson"
   depends_on "snappy"
   depends_on "thrift"
@@ -42,7 +42,7 @@ class ApacheArrow < Formula
       -DARROW_PYTHON=ON
       -DARROW_JEMALLOC=OFF
       -DARROW_INSTALL_NAME_RPATH=OFF
-      -DPYTHON_EXECUTABLE=#{Formula["python"].bin/"python3"}
+      -DPYTHON_EXECUTABLE=#{Formula["python@3.8"].bin/"python3"}
     ]
 
     mkdir "build"

@@ -3,7 +3,7 @@ class Gdal < Formula
   homepage "https://www.gdal.org/"
   url "https://download.osgeo.org/gdal/2.4.2/gdal-2.4.2.tar.xz"
   sha256 "dcc132e469c5eb76fa4aaff238d32e45a5d947dc5b6c801a123b70045b618e0c"
-  revision 3
+  revision 4
 
   bottle do
     sha256 "37370723c5db87a87aa05e6601b5ecd91829788770eb3b70b8728483fd42e950" => :catalina
@@ -38,7 +38,7 @@ class Gdal < Formula
   depends_on "pcre"
   depends_on "poppler"
   depends_on "proj"
-  depends_on "python"
+  depends_on "python@3.8"
   depends_on "sqlite" # To ensure compatibility with SpatiaLite
   depends_on "unixodbc" # macOS version is not complete enough
   depends_on "webp"

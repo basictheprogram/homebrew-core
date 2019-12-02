@@ -3,6 +3,7 @@ class GobjectIntrospection < Formula
   homepage "https://wiki.gnome.org/Projects/GObjectIntrospection"
   url "https://download.gnome.org/sources/gobject-introspection/1.62/gobject-introspection-1.62.0.tar.xz"
   sha256 "b1ee7ed257fdbc008702bdff0ff3e78a660e7e602efa8f211dc89b9d1e7d90a2"
+  revision 1
 
   bottle do
     sha256 "0617abce4097de602c1b3baf28619c963ce977051908ffc7f75067e75300d92c" => :catalina
@@ -17,7 +18,7 @@ class GobjectIntrospection < Formula
   depends_on "glib"
   depends_on "libffi"
   depends_on "pkg-config"
-  depends_on "python"
+  depends_on "python@3.8"
 
   resource "tutorial" do
     url "https://gist.github.com/7a0023656ccfe309337a.git",
@@ -36,7 +37,7 @@ class GobjectIntrospection < Formula
 
     args = %W[
       --prefix=#{prefix}
-      -Dpython=#{Formula["python"].opt_bin}/python3
+      -Dpython=#{Formula["python@3.8"].opt_bin}/python3
     ]
 
     mkdir "build" do
@@ -44,6 +45,10 @@ class GobjectIntrospection < Formula
       system "ninja", "-v"
       system "ninja", "install", "-v"
     end
+
+    inreplace Dir["#{bin}/{g-ir-annotation-tool,g-ir-scanner}"],
+      "#!/usr/bin/env python3",
+      "#!#{Formula["python@3.8"].opt_bin}/python3"
   end
 
   test do

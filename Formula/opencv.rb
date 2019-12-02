@@ -3,6 +3,7 @@ class Opencv < Formula
   homepage "https://opencv.org/"
   url "https://github.com/opencv/opencv/archive/4.1.2.tar.gz"
   sha256 "385dd0a9c25e67ef0dd60e022d2a2d7b17e2f36819cf3cb46aa8cdff5c5282c9"
+  revision 1
 
   bottle do
     rebuild 1
@@ -23,7 +24,7 @@ class Opencv < Formula
   depends_on "libtiff"
   depends_on "numpy"
   depends_on "openexr"
-  depends_on "python"
+  depends_on "python@3.8"
   depends_on "tbb"
 
   resource "contrib" do

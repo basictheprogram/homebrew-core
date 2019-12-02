@@ -3,6 +3,7 @@ class Cassandra < Formula
   homepage "https://cassandra.apache.org"
   url "https://www.apache.org/dyn/closer.cgi?path=cassandra/3.11.4/apache-cassandra-3.11.4-bin.tar.gz"
   sha256 "5d598e23c3ffc4db0301ec2b313061e3208fae0f9763d4b47888237dd9069987"
+  revision 1
 
   bottle do
     cellar :any_skip_relocation
@@ -13,7 +14,7 @@ class Cassandra < Formula
   end
 
   depends_on "cython"
-  depends_on "python"
+  depends_on "python@3.8"
 
   # Only >=Yosemite has new enough setuptools for successful compile of the below deps.
   resource "setuptools" do

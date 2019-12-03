@@ -3,6 +3,7 @@ class Mat2 < Formula
   homepage "https://0xacab.org/jvoisin/mat2"
   url "https://0xacab.org/jvoisin/mat2/-/archive/0.9.0/mat2-0.9.0.tar.gz"
   sha256 "cc2265458dda0b65f488d4d97c4e1b9f99feda88398fc146e844cbd3a357d2af"
+  revision 1
 
   bottle do
     cellar :any_skip_relocation
@@ -18,7 +19,7 @@ class Mat2 < Formula
   depends_on "poppler"
   depends_on "py3cairo"
   depends_on "pygobject3"
-  depends_on "python"
+  depends_on "python@3.8"
 
   resource "mutagen" do
     url "https://files.pythonhosted.org/packages/30/4c/5ad1a6e1ccbcfaf6462db727989c302d9d721beedd9b09c11e6f0c7065b0/mutagen-1.42.0.tar.gz"

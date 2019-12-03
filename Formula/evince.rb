@@ -3,6 +3,7 @@ class Evince < Formula
   homepage "https://wiki.gnome.org/Apps/Evince"
   url "https://download.gnome.org/sources/evince/3.34/evince-3.34.2.tar.xz"
   sha256 "3cc0955f11204e3a2db1c7ab99b866692749592257485b87304134ad69da0617"
+  revision 1
 
   bottle do
     sha256 "d2f32a656495d150351f73bcb0c0f1c389d5092bc6dde4e598023040950593d1" => :catalina
@@ -25,7 +26,7 @@ class Evince < Formula
   depends_on "libspectre"
   depends_on "libxml2"
   depends_on "poppler"
-  depends_on "python"
+  depends_on "python@3.8"
 
   def install
     ENV["GETTEXTDATADIR"] = "#{Formula["appstream-glib"].opt_share}/gettext"

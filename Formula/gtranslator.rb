@@ -3,7 +3,7 @@ class Gtranslator < Formula
   homepage "https://wiki.gnome.org/Design/Apps/Translator"
   url "https://download.gnome.org/sources/gtranslator/3.34/gtranslator-3.34.0.tar.xz"
   sha256 "b2f25c02bdfd246896803756078c3006ef433c83eb802bc23a33413046bffb17"
-  revision 1
+  revision 2
 
   bottle do
     sha256 "159e755282296b401507b791b4c4b7121b995a8055b75271aca6c4ff95c7fcf6" => :catalina
@@ -14,7 +14,7 @@ class Gtranslator < Formula
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python" => :build
+  depends_on "python@3.8" => :build
   depends_on "adwaita-icon-theme"
   depends_on "glib"
   depends_on "gspell"

@@ -3,6 +3,7 @@ class Py3cairo < Formula
   homepage "https://cairographics.org/pycairo/"
   url "https://github.com/pygobject/pycairo/releases/download/v1.18.2/pycairo-1.18.2.tar.gz"
   sha256 "dcb853fd020729516e8828ad364084e752327d4cff8505d20b13504b32b16531"
+  revision 1
 
   bottle do
     cellar :any
@@ -13,7 +14,7 @@ class Py3cairo < Formula
 
   depends_on "pkg-config" => :build
   depends_on "cairo"
-  depends_on "python"
+  depends_on "python@3.8"
 
   def install
     system "python3", *Language::Python.setup_install_args(prefix)

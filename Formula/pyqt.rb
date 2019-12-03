@@ -3,6 +3,7 @@ class Pyqt < Formula
   homepage "https://www.riverbankcomputing.com/software/pyqt/download5"
   url "https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.13.2/PyQt5-5.13.2.tar.gz"
   sha256 "adc17c077bf233987b8e43ada87d1e0deca9bd71a13e5fd5fc377482ed69c827"
+  revision 1
 
   bottle do
     cellar :any
@@ -12,7 +13,7 @@ class Pyqt < Formula
     sha256 "7dbe8e7e69eeda102bae7cae9f6f1ccae9c73ea9662643df1534b66a9e8a70cc" => :high_sierra
   end
 
-  depends_on "python"
+  depends_on "python@3.8"
   depends_on "qt"
   depends_on "sip"
 
@@ -37,6 +38,7 @@ class Pyqt < Formula
   end
 
   test do
+
     system "#{bin}/pyuic5", "--version"
     system "#{bin}/pylupdate5", "-version"
 

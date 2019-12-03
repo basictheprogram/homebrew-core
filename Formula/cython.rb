@@ -3,6 +3,7 @@ class Cython < Formula
   homepage "https://cython.org/"
   url "https://files.pythonhosted.org/packages/9c/9b/706dac7338c2860cd063a28cdbf5e9670995eaea408abbf2e88ba070d90d/Cython-0.29.14.tar.gz"
   sha256 "e4d6bb8703d0319eb04b7319b12ea41580df44fd84d83ccda13ea463c6801414"
+  revision 1
 
   bottle do
     cellar :any_skip_relocation
@@ -16,7 +17,7 @@ class Cython < Formula
     Users are advised to use `pip` to install cython
   EOS
 
-  depends_on "python"
+  depends_on "python@3.8"
 
   def install
     xy = Language::Python.major_minor_version "python3"
@@ -28,6 +29,7 @@ class Cython < Formula
   end
 
   test do
+
     xy = Language::Python.major_minor_version "python3"
     ENV.prepend_path "PYTHONPATH", libexec/"lib/python#{xy}/site-packages"
 

@@ -3,6 +3,7 @@ class Numpy < Formula
   homepage "https://www.numpy.org/"
   url "https://files.pythonhosted.org/packages/ff/59/d3f6d46aa1fd220d020bdd61e76ca51f6548c6ad6d24ddb614f4037cf49d/numpy-1.17.4.zip"
   sha256 "f58913e9227400f1395c7b800503ebfdb0772f1c33ff8cb4d6451c06cabdf316"
+  revision 1
   head "https://github.com/numpy/numpy.git"
 
   bottle do
@@ -15,7 +16,7 @@ class Numpy < Formula
   depends_on "cython" => :build
   depends_on "gcc" => :build # for gfortran
   depends_on "openblas"
-  depends_on "python"
+  depends_on "python@3.8"
 
   def install
     openblas = Formula["openblas"].opt_prefix
@@ -41,6 +42,7 @@ class Numpy < Formula
   end
 
   test do
+
     system "python3", "-c", <<~EOS
       import numpy as np
       t = np.ones((3,3), int)

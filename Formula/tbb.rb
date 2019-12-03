@@ -4,6 +4,7 @@ class Tbb < Formula
   url "https://github.com/intel/tbb/archive/2019_U9.tar.gz"
   version "2019_U9"
   sha256 "15652f5328cf00c576f065e5cd3eaf3317422fe82afb67a9bcec0dc065bd2abe"
+  revision 1
 
   bottle do
     cellar :any
@@ -14,7 +15,7 @@ class Tbb < Formula
 
   depends_on "cmake" => :build
   depends_on "swig" => :build
-  depends_on "python"
+  depends_on "python@3.8"
 
   def install
     compiler = (ENV.compiler == :clang) ? "clang" : "gcc"

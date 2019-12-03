@@ -4,6 +4,7 @@ class Libxml2 < Formula
   url "http://xmlsoft.org/sources/libxml2-2.9.10.tar.gz"
   mirror "https://ftp.osuosl.org/pub/blfs/conglomeration/libxml2/libxml2-2.9.10.tar.gz"
   sha256 "aafee193ffb8fe0c82d4afef6ef91972cbaf5feea100edc2f262750611b4be1f"
+  revision 1
 
   bottle do
     cellar :any
@@ -23,7 +24,7 @@ class Libxml2 < Formula
 
   keg_only :provided_by_macos
 
-  depends_on "python"
+  depends_on "python@3.8"
   depends_on "readline"
 
   # Fix crash when using Python 3 using Fedora's patch.

@@ -3,6 +3,7 @@ class Libpeas < Formula
   homepage "https://developer.gnome.org/libpeas/stable/"
   url "https://download.gnome.org/sources/libpeas/1.24/libpeas-1.24.1.tar.xz"
   sha256 "9c3acf7a567cbb4f8bf62b096e013f12c3911cc850c3fa9900cbd5aa4f6ec284"
+  revision 1
 
   bottle do
     sha256 "0b0f838272f0a44cb81c70fffb984a054a12ea63f6b515aab1f1158bc96bad1b" => :catalina
@@ -18,7 +19,7 @@ class Libpeas < Formula
   depends_on "gobject-introspection"
   depends_on "gtk+3"
   depends_on "pygobject3"
-  depends_on "python"
+  depends_on "python@3.8"
 
   # patch submitted upstream as https://gitlab.gnome.org/GNOME/libpeas/merge_requests/22
   patch do

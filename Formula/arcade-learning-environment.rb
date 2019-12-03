@@ -3,7 +3,7 @@ class ArcadeLearningEnvironment < Formula
   homepage "https://github.com/mgbellemare/Arcade-Learning-Environment"
   url "https://github.com/mgbellemare/Arcade-Learning-Environment/archive/v0.6.0.tar.gz"
   sha256 "da4597edf8ebef99961394daca44fa30148c778adff59ee5aec073ea94dcc175"
-  revision 4
+  revision 5
   head "https://github.com/mgbellemare/Arcade-Learning-Environment.git"
 
   bottle do
@@ -16,7 +16,7 @@ class ArcadeLearningEnvironment < Formula
 
   depends_on "cmake" => :build
   depends_on "numpy"
-  depends_on "python"
+  depends_on "python@3.8"
   depends_on "sdl"
 
   def install
@@ -30,6 +30,7 @@ class ArcadeLearningEnvironment < Formula
   end
 
   test do
+
     output = shell_output("#{bin}/ale 2>&1", 1).lines.last.chomp
     assert_equal "No ROM File specified.", output
     (testpath/"test.py").write <<~EOS
